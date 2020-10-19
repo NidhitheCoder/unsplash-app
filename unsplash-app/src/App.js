@@ -1,12 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {Switch,Route} from 'react-router-dom';
+
+import MainPage from './pages/mainPage/mainPage.component';
 
 function App() {
   return (
-    <div className="App">
-      Unsplash app
-    </div>
+   <Switch>
+   <Route exact path="/" component={MainPage} />
+   </Switch>
   );
 }
 
