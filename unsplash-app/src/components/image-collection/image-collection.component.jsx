@@ -4,9 +4,10 @@ import './image-collection.styles.modules.scss';
 import ImageCard from '../image-card/image-card.compnent';
 
 const ImageCollection = () => (
-  <div>
-  <h3>image collection</h3>
+  <div className="image-collection">
     <ImageCard />
+    <ImageCard />
+    <imagecar />
   </div>
 );
 
