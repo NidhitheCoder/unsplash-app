@@ -13,12 +13,7 @@ import LockOutLinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
-const Copyright = () => (
-  <Typography variant="body2" color="textSecondary" align="center">
-    {`Copyright © Unsplash ${new Date().getFullYear()}`}
-  </Typography>
-);
+import {Copyright} from '../copyright/copyright.component';
 
 const useStyles = makeStyles(theme => ({
   paper: {
