@@ -6,10 +6,8 @@ import ImageCollection from "../../components/image-collection/image-collection.
 class MainPage extends React.Component {
   render() {
     return (
-      <div>
+      <div className="main-page-container">
         <Navbar />
-        <h3>Main page body is here</h3>
-        <p>lorem ipsm</p>
         <ImageCollection />
       </div>
     );

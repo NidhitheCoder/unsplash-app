@@ -1,7 +1,12 @@
+.image-card {
+  position: relative;
+  width: 100%;
+  height: min-content;
 
-.image-card{
-    height:300px;
-    width:200px;
-    background: green;
-    border: 1px solid grey;
+  h3 {
+    position: absolute;
+    bottom: 0;
+    left: 1vw;
+    color: #ffffff;
+  }
 }

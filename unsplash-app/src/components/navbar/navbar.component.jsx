@@ -13,7 +13,7 @@ const Navbar = () => (
         <div className="search-icon">
           <SearchIcon />
         </div>
-        <InputBase placeholder="Search Name" className="search-bar" />
+        <InputBase placeholder="Search by name" className="search-bar" />
       </div>
     </div>
     <div className="header-part">
