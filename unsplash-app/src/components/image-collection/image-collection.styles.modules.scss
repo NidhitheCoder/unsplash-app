@@ -1,7 +1,6 @@
 .image-collection {
-  width: 90vw;
-  gap: 3vw;
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  grid-auto-rows: 200px;
+  columns: 3 200px;
+  column-gap: 1.5rem;
+  width: 90%;
+  margin:5vh auto;
 }
