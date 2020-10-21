@@ -50,11 +50,11 @@
 
   ```
 
-# Perttier
+# Prettier
 
 - Prettier helps to formating and styling your code.
 
-- How to install
+- How to install ?
 
   ```
   1. With yarn
@@ -65,3 +65,6 @@
       npm install prettier --save-dev
 
   ```
+
+
+>> ref: https://thomlom.dev/setup-eslint-prettier-react/
