@@ -61,7 +61,7 @@ const Login = () => {
           />
           <TextField
             variant="outlined"
-            margin="noraml"
+            margin="normal"
             fullWidth
             required
             id="password"
