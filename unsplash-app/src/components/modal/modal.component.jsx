@@ -18,7 +18,6 @@ const useStyles = makeStyles(theme => ({
     outline: "none",
     outlineColor: "transparent",
     outlineStyle: "hidden",
-    color: "green"
   }
 }));
 
@@ -39,7 +38,7 @@ const ModalComponent = ({ open, handleClose,children }) => {
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <h2 id="transition-modal-title">Add Photo</h2>
+          <h2 id="transition-modal-title">{children}</h2>
           <p id="transition-Modal-description">This modal for display</p>
         </div>
       </Fade>

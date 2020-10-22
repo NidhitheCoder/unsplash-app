@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import SearchIcon from "@material-ui/icons/Search";
 
 import ModalComponent from "../modal/modal.component";
-import CustomButton from '../custom-button/custom-button.component';
+import CustomButton from "../custom-button/custom-button.component";
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
@@ -34,10 +34,10 @@ const Navbar = () => {
           classes="add-photo-btn"
           caption="Add Photo"
           onclick={handleOpen}
-         />
-
+        />
       </div>
-      <ModalComponent open={open} handleClose={handleClose} >
+      <ModalComponent open={open} handleClose={handleClose}>
+        Add Photo Here
       </ModalComponent>
     </div>
   );
