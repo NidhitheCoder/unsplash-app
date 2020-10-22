@@ -14,7 +14,7 @@
 
   h3 {
     position: absolute;
-    bottom: 2vh;
+    bottom: 3vh;
     left: 2vw;
     color: #ffffff;
     display: none;
@@ -22,6 +22,10 @@
     font-weight: 500;
     line-height: 21.94px;
   }
+
+  &:hover .delete {
+    display:"block"
+   }
 
   &:hover h3{
     display: block;

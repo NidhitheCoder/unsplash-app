@@ -5,8 +5,8 @@ import Login from '../../components/login-component/login.component';
 import SignUp from '../../components/signUp/signUp.component';
 
 const LoginAndSignUp = () => (
-    // <Login />
-    <SignUp />
+    <Login />
+    // <SignUp />
 );
 
 export default LoginAndSignUp;

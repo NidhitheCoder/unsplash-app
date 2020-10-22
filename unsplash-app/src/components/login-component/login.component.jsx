@@ -1,7 +1,6 @@
 import React from "react";
 import "./login.styles.modules.scss";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -13,7 +12,8 @@ import LockOutLinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import {Copyright} from '../copyright/copyright.component';
+import { Copyright } from "../copyright/copyright.component";
+import CustomButton from "../custom-button/custom-button.component";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -74,15 +74,14 @@ const Login = () => {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember Me"
           />
-          <Button
+          <CustomButton
             type="submit"
-            fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
-          >
-            Sign in
-          </Button>
+            caption="Sign in"
+            classes={classes.submit}
+            onclick={() => (alert("sign in successfully"))}
+          />
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">

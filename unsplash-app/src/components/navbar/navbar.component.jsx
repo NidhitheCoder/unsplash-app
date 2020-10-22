@@ -2,10 +2,10 @@ import React from "react";
 import "./navbar.styles.modules.scss";
 import InputBase from "@material-ui/core/InputBase";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import SearchIcon from "@material-ui/icons/Search";
 
 import ModalComponent from "../modal/modal.component";
+import CustomButton from '../custom-button/custom-button.component';
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
@@ -29,13 +29,13 @@ const Navbar = () => {
         </div>
       </div>
       <div className="header-part">
-        <Button
+        <CustomButton
           variant="contained"
-          className="add-photo-btn"
-          onClick={handleOpen}
-        >
-          Add Photo
-        </Button>
+          classes="add-photo-btn"
+          caption="Add Photo"
+          onclick={handleOpen}
+         />
+
       </div>
       <ModalComponent open={open} handleClose={handleClose} >
       </ModalComponent>

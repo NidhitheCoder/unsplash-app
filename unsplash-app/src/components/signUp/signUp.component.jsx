@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
@@ -11,6 +11,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Copyright } from "../copyright/copyright.component";
+import CustomButton  from '../custom-button/custom-button.component';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -95,15 +96,14 @@ const SignUp = () => {
               />
             </Grid>
           </Grid>
-          <Button
+          <CustomButton
             type="submit"
             fullWidth
+            caption="Sign Up"
             variant="contained"
             color="primary"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
+            classes={classes.submit}
+          />
           <Grid container justify="flex-end">
             <grid item margin={4}>
               <Link href="#" variant="body2">
