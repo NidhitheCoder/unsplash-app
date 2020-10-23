@@ -14,14 +14,18 @@ class ImageCollection extends React.Component {
   }
 
   render() {
-    let { imgCollectionFromStore } = this.props;
+    let { imgCollectionFromStore, imageCollection } = this.props;
     imgCollectionFromStore = imgCollectionFromStore
       ? imgCollectionFromStore
       : [];
     return (
       <div className="image-collection">
         {imgCollectionFromStore.map(data => (
-          <ImageCard data={data} key={data.id} />
+          <ImageCard
+            data={data}
+            imageCollection={imageCollection}
+            key={data.id}
+          />
         ))}
       </div>
     );

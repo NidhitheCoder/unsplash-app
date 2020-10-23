@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 
 import CustomButton from "../custom-button/custom-button.component";
+import { deleteImgwithId } from "../../api_calls/api-calls";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -50,13 +51,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ImageCard = ({ data }) => {
+const ImageCard = ({ data, imageCollection }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
+    setOpen(false);
+  };
+
+  const deleteImage = () => {
+    deleteImgwithId(data.id, imageCollection);
     setOpen(false);
   };
 
@@ -115,6 +121,7 @@ const ImageCard = ({ data }) => {
                 classes={classes.cancel}
                 color="secondary"
                 caption="Delete"
+                onclick={deleteImage}
               />
             </Grid>
           </Grid>
