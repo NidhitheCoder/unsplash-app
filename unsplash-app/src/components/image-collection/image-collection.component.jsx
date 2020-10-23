@@ -2,6 +2,7 @@ import React from "react";
 import "./image-collection.styles.modules.scss";
 
 import ImageCard from "../image-card/image-card.compnent";
+import {getImgCollection} from '../../api_calls/api-calls';
 
 
 class ImageCollection extends React.Component {
@@ -13,10 +14,9 @@ class ImageCollection extends React.Component {
   }
 
   
-  componentDidMount() {
-    fetch("http://localhost:3000/Data")
-      .then(response => response.json())
-      .then(data => this.setState({dataArr:data}));
+ async componentDidMount() {
+    let imgColelction = await getImgCollection("/data");
+    this.setState({dataArr:imgColelction});
   }
 
   render() {

@@ -90,3 +90,32 @@
   ```
 
 > > ref: https://thomlom.dev/setup-eslint-prettier-react/
+
+# Axios with React
+
+- Axios is a promise based HTTP request library, which allows us to interface with REST API's.
+
+- How to install ?
+   
+   ```
+      npm install axios
+
+    ```
+
+- Usage example
+     
+     ```
+
+    import axios from 'axios';
+
+    axios.get("Put your URL here")
+    .then(response=>{
+        // codes with response data here
+    })
+
+
+    * you can change the request type when you need: axios.put,axios.post,axios.delete etc..
+
+     ```
+
+ >> referance : https://www.youtube.com/watch?v=oQnojIyTXb8
