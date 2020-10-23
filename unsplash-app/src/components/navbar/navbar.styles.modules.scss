@@ -5,12 +5,14 @@
   justify-content: space-between;
   height: 100px;
   width:100%;
+  flex-wrap: wrap;
 
   .header-part {
     padding: 0 3vw;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
 
     .logo {
       color: #000;
@@ -34,7 +36,7 @@
       min-width: 300px;
       display: flex;
       align-items: center;
-      padding: 0 2vw;
+      padding: 0 10px;
 
       &:hover {
         background-color: rgba(255, 255, 255, 0.25);
@@ -52,21 +54,9 @@
 
       .search-bar {
         padding: 1px 3px 1px 0;
-        margin-left: 3vw;
+        margin-left: 30px;
         width: 100%;
       }
-    }
-
-    .add-photo-btn {
-      background: #3db46d;
-      color: #fff;
-      border-radius: 24px;
-      font-size: 14px;
-      font-weight: 700;
-      font-style: normal;
-      line-height: 19.07px;
-      min-width: 137px;
-      height: 55px;
     }
   }
 }

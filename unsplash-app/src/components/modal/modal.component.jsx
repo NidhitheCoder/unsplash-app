@@ -13,13 +13,12 @@ const useStyles = makeStyles(theme => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(10),
+    padding: theme.spacing(5),
     borderRadius: theme.spacing(3),
     outline: "none",
     outlineColor: "transparent",
     outlineStyle: "hidden",
-    color: "green"
-  }
+  },
 }));
 
 const ModalComponent = ({ open, handleClose,children }) => {
@@ -39,8 +38,7 @@ const ModalComponent = ({ open, handleClose,children }) => {
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <h2 id="transition-modal-title">Add Photo</h2>
-          <p id="transition-Modal-description">This modal for display</p>
+        {children}
         </div>
       </Fade>
     </Modal>
