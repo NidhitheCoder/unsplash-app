@@ -69,9 +69,9 @@ const Navbar = () => {
           Add a new photo
         </Typography>
         <Box mt={3}>
-          <Grid container xs={12}>
+          <Grid container>
             <Grid item xs={12}>
-              <Typography variant="p">Label</Typography>
+              <Typography variant="caption">Label</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -82,7 +82,7 @@ const Navbar = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="p">Photo URL</Typography>
+              <Typography variant="caption">Photo URL</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"

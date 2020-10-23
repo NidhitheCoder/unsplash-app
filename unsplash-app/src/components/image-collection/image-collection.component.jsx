@@ -1,31 +1,39 @@
 import React from "react";
+import { connect } from "react-redux";
 import "./image-collection.styles.modules.scss";
 
 import ImageCard from "../image-card/image-card.compnent";
-import {getImgCollection} from '../../api_calls/api-calls';
-
+import { getImgCollection } from "../../api_calls/api-calls";
+import { addImageCollectionToStore } from "../../redux/image-collection/image-collection.action";
 
 class ImageCollection extends React.Component {
-  constructor(){
-    super()
-    this.state = {
-      dataArr : []
-    }
-  }
-
-  
- async componentDidMount() {
-    let imgColelction = await getImgCollection("/data");
-    this.setState({dataArr:imgColelction});
+  async componentDidMount() {
+    let { imageCollection } = this.props;
+    let dataCollection = await getImgCollection("/data");
+    imageCollection(dataCollection);
   }
 
   render() {
+    let { imgCollectionFromStore } = this.props;
+    imgCollectionFromStore = imgCollectionFromStore
+      ? imgCollectionFromStore
+      : [];
     return (
       <div className="image-collection">
-        { this.state.dataArr.map(data => <ImageCard data={data} key={data.id} />)}
+        {imgCollectionFromStore.map(data => (
+          <ImageCard data={data} key={data.id} />
+        ))}
       </div>
     );
   }
 }
 
-export default ImageCollection;
+const mapDispatchToProps = dispatch => ({
+  imageCollection: data => dispatch(addImageCollectionToStore(data))
+});
+
+const mapStateToProps = state => ({
+  imgCollectionFromStore: state.imageCollection.imageCollection
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImageCollection);
