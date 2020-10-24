@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 
 import CustomButton from "../custom-button/custom-button.component";
+import { deleteImgwithId } from "../../api_calls/api-calls";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -34,29 +35,34 @@ const useStyles = makeStyles(theme => ({
     textTransform: "LowerCase",
     lineHeight: "14.63px"
   },
-  cancel:{
-    borderRadius:theme.spacing(3),
-    height:"55px",
-    minWidth:"137px",
-    color:"#BDBDBD"
+  cancel: {
+    borderRadius: theme.spacing(3),
+    height: "55px",
+    minWidth: "137px",
+    color: "#BDBDBD"
   },
-  button:{
-    backgrounColor:"#EB5757",
-    color:"#fff",
-    borderRadius:theme.spacing(3),
-    fontSize:"14px",
-    fontWeight:700,
-    height:"55px",
+  button: {
+    backgrounColor: "#EB5757",
+    color: "#fff",
+    borderRadius: theme.spacing(3),
+    fontSize: "14px",
+    fontWeight: 700,
+    height: "55px"
   }
 }));
 
-const ImageCard = ({ data }) => {
+const ImageCard = ({ data, imageCollection }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
+    setOpen(false);
+  };
+
+  const deleteImage = () => {
+    deleteImgwithId(data.id, imageCollection);
     setOpen(false);
   };
 
@@ -84,15 +90,14 @@ const ImageCard = ({ data }) => {
           Are you sure ?
         </Typography>
         <Box mt={3}>
-          <Grid container xs={12}>
+          <Grid container>
             <Grid item xs={12}>
-              <Typography variant="p">Password</Typography>
+              <Typography variant="caption">Password</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
                 fullWidth
                 required
-                classes="textField"
                 placeholder="***********"
                 id="password"
                 name="password"
@@ -101,10 +106,9 @@ const ImageCard = ({ data }) => {
                 autoFocus
               />
             </Grid>
-            <Grid item xs ={6}/>
+            <Grid item xs={6} />
             <Grid item xs={3}>
               <CustomButton
-                variant=""
                 disabled
                 caption="Cancel"
                 classes={classes.cancel}
@@ -117,6 +121,7 @@ const ImageCard = ({ data }) => {
                 classes={classes.cancel}
                 color="secondary"
                 caption="Delete"
+                onclick={deleteImage}
               />
             </Grid>
           </Grid>

@@ -10,6 +10,7 @@ import ModalComponent from "../modal/modal.component";
 import CustomButton from "../custom-button/custom-button.component";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
+import { AddNewImage } from "../../api_calls/api-calls";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -26,11 +27,11 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: "#3db46d"
     }
   },
-  cancel:{
-    borderRadius:theme.spacing(3),
-    height:"55px",
-    minWidth:"137px",
-    color:"#BDBDBD"
+  cancel: {
+    borderRadius: theme.spacing(3),
+    height: "55px",
+    minWidth: "137px",
+    color: "#BDBDBD"
   }
 }));
 
@@ -42,6 +43,18 @@ const Navbar = () => {
   };
 
   const handleClose = () => {
+    setOpen(false);
+  };
+
+  const AddImage = () => {
+    const label = document.getElementById('photoLabel');
+    const url = document.getElementById('photoUrl');
+    AddNewImage(
+      102,
+      label.value,
+      url.value,
+      112
+    );
     setOpen(false);
   };
 
@@ -69,9 +82,9 @@ const Navbar = () => {
           Add a new photo
         </Typography>
         <Box mt={3}>
-          <Grid container xs={12}>
+          <Grid container>
             <Grid item xs={12}>
-              <Typography variant="p">Label</Typography>
+              <Typography variant="caption">Label</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -82,7 +95,7 @@ const Navbar = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="p">Photo URL</Typography>
+              <Typography variant="caption">Photo URL</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -95,16 +108,18 @@ const Navbar = () => {
             </Grid>
             <Grid item xs={8}></Grid>
             <Grid item xs={2}>
-              <CustomButton caption="cancel" classes={classes.cancel} onclick={handleClose} />
+              <CustomButton
+                caption="cancel"
+                classes={classes.cancel}
+                onclick={handleClose}
+              />
             </Grid>
             <Grid item xs={2}>
               <CustomButton
                 caption="Submit"
                 classes={classes.button}
                 variant="contained"
-                onclick={() => {
-                  alert("haiii");
-                }}
+                onclick={AddImage}
               />
             </Grid>
           </Grid>
