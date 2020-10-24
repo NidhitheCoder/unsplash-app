@@ -120,3 +120,5 @@
 
  >> referance : https://www.youtube.com/watch?v=oQnojIyTXb8
  >> Axios with instance : https://www.youtube.com/watch?v=DqYqkK5YRbw
+
+>> referance for Json server Tutorial: http://zetcode.com/javascript/jsonserver/

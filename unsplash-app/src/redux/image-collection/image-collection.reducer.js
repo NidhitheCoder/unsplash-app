@@ -11,11 +11,9 @@ const imageCollectionReducer = (state = INITIAL_STATE, action) => {
         ...state,
         imageCollection: action.payload
       };
-      break;
 
     default:
       return { state };
-      break;
   }
 };
 
