@@ -49,12 +49,13 @@ const Navbar = () => {
   const AddImage = () => {
     const label = document.getElementById('photoLabel');
     const url = document.getElementById('photoUrl');
-    AddNewImage(
+   let newImage = AddNewImage(
       102,
       label.value,
       url.value,
       112
     );
+    console.log(newImage);
     setOpen(false);
   };
 
