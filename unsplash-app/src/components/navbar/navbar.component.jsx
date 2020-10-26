@@ -1,12 +1,11 @@
 import React from "react";
 import "./navbar.styles.modules.scss";
-import InputBase from "@material-ui/core/InputBase";
 import Typography from "@material-ui/core/Typography";
-import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
 
 import AddPhoto from "../addPhoto/addPhoto.component";
 import { addSingleImageToStore } from "../../redux/image-collection/image-collection.action";
+import SearchComponent from '../search/serach.component';
 
 class Navbar extends React.Component {
   render() {
@@ -15,12 +14,7 @@ class Navbar extends React.Component {
       <div className="header">
         <div className="header-part">
           <Typography className="logo">My Unsplash</Typography>
-          <div className="search">
-            <div className="search-icon">
-              <SearchIcon />
-            </div>
-            <InputBase placeholder="Search by name" className="search-bar" />
-          </div>
+          <SearchComponent />
         </div>
         <div className="header-part">
           <AddPhoto addSingleImage={addSingleImage} />
