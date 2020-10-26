@@ -14,13 +14,18 @@ class ImageCollection extends React.Component {
   }
 
   render() {
-    let { imgCollectionFromStore, imageCollection } = this.props;
+    let { imgCollectionFromStore, imageCollection,searchKeyword} = this.props;
     imgCollectionFromStore = imgCollectionFromStore
       ? imgCollectionFromStore
       : [];
+
+      let keyword = searchKeyword ? searchKeyword : "";
+      const filteredArray = imgCollectionFromStore.filter(image =>{
+        return image.title.toLowerCase().includes(keyword.toLowerCase());
+      })
     return (
       <div className="image-collection">
-        {imgCollectionFromStore.map(data => (
+        {filteredArray.map(data => (
           <ImageCard
             data={data}
             imageCollection={imageCollection}
@@ -37,7 +42,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  imgCollectionFromStore: state.imageCollection.imageCollection
+  imgCollectionFromStore: state.imageCollection.imageCollection,
+  searchKeyword:state.imageCollection.searchWord
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageCollection);

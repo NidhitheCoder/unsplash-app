@@ -14,6 +14,7 @@ export const deleteImgwithId = async (id, imageCollection) => {
 };
 
 export const AddNewImage = async (id, title, url, userId) => {
+  let imageDetails;
   await axios
     .post(`/data/`, {
       id: id,
@@ -21,8 +22,8 @@ export const AddNewImage = async (id, title, url, userId) => {
       title: title,
       imgUrl: url
     })
-    .then(res => console.log(res));
-  return true;
+    .then(res => imageDetails = res.data);
+  return imageDetails;
 };
 
 const getDataWithOperations = async imageCollection => {
