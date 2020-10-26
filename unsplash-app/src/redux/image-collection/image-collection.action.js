@@ -5,3 +5,8 @@ export const addImageCollectionToStore = imageCollectionData => ({
     payload:imageCollectionData
 });
 
+export const addSingleImageToStore = singleImage => ({
+    type:imageCollectionActionTypes.ADD_SINGLE_IMAGE,
+    payload:singleImage
+});
+

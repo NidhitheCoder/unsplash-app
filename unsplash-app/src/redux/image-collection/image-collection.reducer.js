@@ -12,6 +12,12 @@ const imageCollectionReducer = (state = INITIAL_STATE, action) => {
         imageCollection: action.payload
       };
 
+      case imageCollectionActionTypes.ADD_SINGLE_IMAGE:
+        return {
+          ...state,
+          imageCollection:[...state.imageCollection, action.payload]
+        }
+
     default:
       return { state };
   }
