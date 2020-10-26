@@ -1,7 +1,8 @@
 import imageCollectionActionTypes from "./image-collection.types";
 
 const INITIAL_STATE = {
-  imageCollection: null
+  imageCollection: null,
+  searchWord: ""
 };
 
 const imageCollectionReducer = (state = INITIAL_STATE, action) => {
@@ -12,11 +13,17 @@ const imageCollectionReducer = (state = INITIAL_STATE, action) => {
         imageCollection: action.payload
       };
 
-      case imageCollectionActionTypes.ADD_SINGLE_IMAGE:
-        return {
-          ...state,
-          imageCollection:[...state.imageCollection, action.payload]
-        }
+    case imageCollectionActionTypes.ADD_SINGLE_IMAGE:
+      return {
+        ...state,
+        imageCollection: [...state.imageCollection, action.payload]
+      };
+
+    case imageCollectionActionTypes.ADD_SEARCH_KEYWORD:
+      return {
+        ...state,
+        searchWord: action.payload
+      };
 
     default:
       return { state };
