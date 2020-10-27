@@ -1,5 +1,9 @@
 import axios from "./axios";
 
+export const getLoginAccess = async() => {
+  await axios.get('data/login').then(res=>console.log(res))
+}
+
 export const getImgCollection = async url => {
   let val = [];
   await axios.get(url).then(data => data.data.map(item => val.push(item)));

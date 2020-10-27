@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import AddPhoto from "../addPhoto/addPhoto.component";
 import { addSingleImageToStore } from "../../redux/image-collection/image-collection.action";
-import SearchComponent from '../search/serach.component';
+import SearchComponent from '../search/search.component';
 
 class Navbar extends React.Component {
   render() {
