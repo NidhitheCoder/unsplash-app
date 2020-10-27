@@ -101,7 +101,6 @@ const ImageCard = ({ data, imageCollection }) => {
                 placeholder="***********"
                 id="password"
                 name="password"
-                type="password"
                 autoComplete="password"
                 autoFocus
               />
