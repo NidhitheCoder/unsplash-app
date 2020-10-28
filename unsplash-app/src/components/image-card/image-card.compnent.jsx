@@ -11,8 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 
 import CustomButton from "../custom-button/custom-button.component";
-import { deleteImgwithId } from "../../api_calls/api-calls";
-import { removeImageFromStore } from "../../redux/image-collection/image-collection.action";
+import { removeImageFromStoreAsync } from "../../redux/image-collection/image-collection.action";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -63,11 +62,8 @@ const ImageCard = ({ data, removeImage }) => {
     setOpen(false);
   };
 
-  const deleteImage = async () => {
-    let status = await deleteImgwithId(data.id);
-    if (status === 200) {
-      removeImage(data);
-    }
+  const deleteImage = () => {
+    removeImage(data);
     setOpen(false);
   };
 
@@ -95,40 +91,40 @@ const ImageCard = ({ data, removeImage }) => {
           Are you sure ?
         </Typography>
         <Box mt={3}>
-        <form noValidate>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="caption">Password</Typography>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                required
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="password"
-              />
+          <form noValidate>
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography variant="caption">Password</Typography>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  required
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="password"
+                />
+              </Grid>
+              <Grid item xs={6} />
+              <Grid item xs={3}>
+                <CustomButton
+                  disabled
+                  caption="Cancel"
+                  classes={classes.cancel}
+                  onclick={handleClose}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <CustomButton
+                  variant="contained"
+                  classes={classes.cancel}
+                  color="secondary"
+                  caption="Delete"
+                  onclick={deleteImage}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={6} />
-            <Grid item xs={3}>
-              <CustomButton
-                disabled
-                caption="Cancel"
-                classes={classes.cancel}
-                onclick={handleClose}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <CustomButton
-                variant="contained"
-                classes={classes.cancel}
-                color="secondary"
-                caption="Delete"
-                onclick={deleteImage}
-              />
-            </Grid>
-          </Grid>
           </form>
         </Box>
       </ModalComponent>
@@ -137,7 +133,7 @@ const ImageCard = ({ data, removeImage }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  removeImage: image => dispatch(removeImageFromStore(image))
+  removeImage: image => dispatch(removeImageFromStoreAsync(image))
 });
 
 export default connect(null, mapDispatchToProps)(ImageCard);

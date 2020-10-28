@@ -4,7 +4,7 @@ import InputBase from "@material-ui/core/InputBase";
 import {connect} from 'react-redux';
 
 import "./search.styles.modules.scss";
-import  {addSearchKeywordToStore} from '../../redux/image-collection/image-collection.action';
+import  {addSearchKeywordToStoreAsync} from '../../redux/image-collection/image-collection.action';
 
 class SearchComonent extends React.Component {
   state = {
@@ -36,7 +36,7 @@ class SearchComonent extends React.Component {
 };
 
 const mapDispatchtoProps = (dispatch) => ({
-addKeyword: keyword => dispatch(addSearchKeywordToStore(keyword))
+addKeyword: keyword => dispatch(addSearchKeywordToStoreAsync(keyword))
 })
 
 export default connect(null,mapDispatchtoProps)(SearchComonent);
