@@ -3,14 +3,12 @@ import { connect } from "react-redux";
 import "./image-collection.styles.modules.scss";
 
 import ImageCard from "../image-card/image-card.compnent";
-import { getImgCollection } from "../../api_calls/api-calls";
-import { addImageCollectionToStore } from "../../redux/image-collection/image-collection.action";
+import { fetchCollecitonStartAsync } from "../../redux/image-collection/image-collection.action";
 
 class ImageCollection extends React.Component {
-  async componentDidMount() {
-    let { imageCollection } = this.props;
-    let dataCollection = await getImgCollection("/data");
-    imageCollection(dataCollection);
+  componentDidMount () {
+    const {fetchCollecitonStartAsync} = this.props;
+    fetchCollecitonStartAsync();
   }
 
   render() {
@@ -37,7 +35,7 @@ class ImageCollection extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  imageCollection: data => dispatch(addImageCollectionToStore(data))
+  fetchCollecitonStartAsync:() => dispatch(fetchCollecitonStartAsync())
 });
 
 const mapStateToProps = state => ({

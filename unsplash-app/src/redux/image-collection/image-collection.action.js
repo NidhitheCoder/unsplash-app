@@ -1,9 +1,29 @@
 import imageCollectionActionTypes from "./image-collection.types";
+import axios from "../../api_calls/axios";
 
-export const addImageCollectionToStore = imageCollectionData => ({
-  type: imageCollectionActionTypes.ADD_IMAGE_DATA,
-  payload: imageCollectionData
+export const fetchImagesStart = () => ({
+  type: imageCollectionActionTypes.FETCH_IMAGES_START
 });
+
+export const fetchImagesSuccess = imagesCollection => ({
+  type: imageCollectionActionTypes.FETCH_IMAGES_SUCCESS,
+  payload: imagesCollection
+});
+
+export const fetchImagesFailure = errorMessage => ({
+  type: imageCollectionActionTypes.FETCH_IMAGES_FAILURE,
+  payload: errorMessage
+});
+
+export const fetchCollecitonStartAsync = () => {
+  return dispatch => {
+    dispatch(fetchImagesStart());
+    axios
+      .get("/data")
+      .then(data => dispatch(fetchImagesSuccess(data.data)))
+      .catch(error => dispatch(fetchImagesFailure(error.message)));
+  };
+};
 
 export const addSingleImageToStore = singleImage => ({
   type: imageCollectionActionTypes.ADD_SINGLE_IMAGE,
