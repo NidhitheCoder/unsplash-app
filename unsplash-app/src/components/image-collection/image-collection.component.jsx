@@ -3,31 +3,28 @@ import { connect } from "react-redux";
 import "./image-collection.styles.modules.scss";
 
 import ImageCard from "../image-card/image-card.compnent";
-import { fetchCollecitonStartAsync } from "../../redux/image-collection/image-collection.action";
+import { fetchCollecitonsStartAsync } from "../../redux/image-collection/image-collection.action";
 
 class ImageCollection extends React.Component {
-  componentDidMount () {
-    const {fetchCollecitonStartAsync} = this.props;
-    fetchCollecitonStartAsync();
+  componentDidMount() {
+    const { fetchCollecitonsStartAsync } = this.props;
+    fetchCollecitonsStartAsync();
   }
 
   render() {
-    let { imgCollectionFromStore,searchKeyword} = this.props;
+    let { imgCollectionFromStore, searchKeyword } = this.props;
     imgCollectionFromStore = imgCollectionFromStore
       ? imgCollectionFromStore
       : [];
 
-      let keyword = searchKeyword ? searchKeyword : "";
-      const filteredArray = imgCollectionFromStore.filter(image =>{
-        return image.title.toLowerCase().includes(keyword.toLowerCase());
-      })
+    let keyword = searchKeyword ? searchKeyword : "";
+    const filteredArray = imgCollectionFromStore.filter(image => {
+      return image.title.toLowerCase().includes(keyword.toLowerCase());
+    });
     return (
       <div className="image-collection">
         {filteredArray.map(data => (
-          <ImageCard
-            data={data}
-            key={data.id}
-          />
+          <ImageCard data={data} key={data.id} />
         ))}
       </div>
     );
@@ -35,12 +32,12 @@ class ImageCollection extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchCollecitonStartAsync:() => dispatch(fetchCollecitonStartAsync())
+  fetchCollecitonsStartAsync: () => dispatch(fetchCollecitonsStartAsync())
 });
 
 const mapStateToProps = state => ({
   imgCollectionFromStore: state.imageCollection.imageCollection,
-  searchKeyword:state.imageCollection.searchWord
+  searchKeyword: state.imageCollection.searchWord
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageCollection);
