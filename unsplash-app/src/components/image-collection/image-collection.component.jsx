@@ -14,7 +14,7 @@ class ImageCollection extends React.Component {
   }
 
   render() {
-    let { imgCollectionFromStore, imageCollection,searchKeyword} = this.props;
+    let { imgCollectionFromStore,searchKeyword} = this.props;
     imgCollectionFromStore = imgCollectionFromStore
       ? imgCollectionFromStore
       : [];
@@ -28,7 +28,6 @@ class ImageCollection extends React.Component {
         {filteredArray.map(data => (
           <ImageCard
             data={data}
-            imageCollection={imageCollection}
             key={data.id}
           />
         ))}

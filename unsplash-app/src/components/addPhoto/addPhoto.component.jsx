@@ -46,7 +46,7 @@ const AddPhoto = ({ addSingleImage }) => {
   const AddImage = async () => {
     const label = document.getElementById("photoLabel");
     const url = document.getElementById("photoUrl");
-    const response = await AddNewImage(102, label.value, url.value, 112);
+    const response = await AddNewImage(103, label.value, url.value, 112);
     addSingleImage(response);
     setOpen(false);
   };

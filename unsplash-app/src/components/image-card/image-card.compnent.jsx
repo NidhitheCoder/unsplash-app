@@ -3,6 +3,7 @@ import "./image-card.styles.modules.scss";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
 import ModalComponent from "../modal/modal.component";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -11,6 +12,7 @@ import Box from "@material-ui/core/Box";
 
 import CustomButton from "../custom-button/custom-button.component";
 import { deleteImgwithId } from "../../api_calls/api-calls";
+import { removeImageFromStore } from "../../redux/image-collection/image-collection.action";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -51,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ImageCard = ({ data, imageCollection }) => {
+const ImageCard = ({ data, removeImage }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -61,8 +63,11 @@ const ImageCard = ({ data, imageCollection }) => {
     setOpen(false);
   };
 
-  const deleteImage = () => {
-    deleteImgwithId(data.id, imageCollection);
+  const deleteImage = async () => {
+    let status = await deleteImgwithId(data.id);
+    if (status === 200) {
+      removeImage(data);
+    }
     setOpen(false);
   };
 
@@ -100,9 +105,8 @@ const ImageCard = ({ data, imageCollection }) => {
                 required
                 placeholder="***********"
                 id="password"
+                // type="password"
                 name="password"
-                autoComplete="password"
-                autoFocus
               />
             </Grid>
             <Grid item xs={6} />
@@ -130,4 +134,8 @@ const ImageCard = ({ data, imageCollection }) => {
   );
 };
 
-export default ImageCard;
+const mapDispatchToProps = dispatch => ({
+  removeImage: image => dispatch(removeImageFromStore(image))
+});
+
+export default connect(null, mapDispatchToProps)(ImageCard);

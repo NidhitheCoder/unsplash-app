@@ -183,3 +183,5 @@
 
 - If redux-thunk middleware is enabled, any time you attempt to dispatch a function instead of an object the middleware will call that function with dispatch  method itself as the first argument.
 ```
+
+referance for dependency error when running our app : https://github.com/creativetimofficial/argon-dashboard-react/issues/28

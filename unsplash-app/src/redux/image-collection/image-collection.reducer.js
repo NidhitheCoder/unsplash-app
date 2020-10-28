@@ -1,4 +1,5 @@
 import imageCollectionActionTypes from "./image-collection.types";
+import { removeImage } from "./image-collection.utils";
 
 const INITIAL_STATE = {
   imageCollection: null,
@@ -17,6 +18,12 @@ const imageCollectionReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         imageCollection: [...state.imageCollection, action.payload]
+      };
+
+    case imageCollectionActionTypes.REMOVE_IMAGE:
+      return {
+        ...state,
+        imageCollection: removeImage(action.payload, state.imageCollection)
       };
 
     case imageCollectionActionTypes.ADD_SEARCH_KEYWORD:

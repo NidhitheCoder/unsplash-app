@@ -10,6 +10,11 @@ export const addSingleImageToStore = singleImage => ({
   payload: singleImage
 });
 
+export const removeImageFromStore = image => ({
+  type: imageCollectionActionTypes.REMOVE_IMAGE,
+  payload: image
+});
+
 export const addSearchKeywordToStore = keyword => ({
   type: imageCollectionActionTypes.ADD_SEARCH_KEYWORD,
   payload: keyword
