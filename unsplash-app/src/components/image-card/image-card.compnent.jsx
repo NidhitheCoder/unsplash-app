@@ -95,6 +95,7 @@ const ImageCard = ({ data, removeImage }) => {
           Are you sure ?
         </Typography>
         <Box mt={3}>
+        <form noValidate>
           <Grid container>
             <Grid item xs={12}>
               <Typography variant="caption">Password</Typography>
@@ -103,10 +104,10 @@ const ImageCard = ({ data, removeImage }) => {
                 margin="normal"
                 fullWidth
                 required
-                placeholder="***********"
                 id="password"
-                // type="password"
                 name="password"
+                type="password"
+                autoComplete="password"
               />
             </Grid>
             <Grid item xs={6} />
@@ -128,6 +129,7 @@ const ImageCard = ({ data, removeImage }) => {
               />
             </Grid>
           </Grid>
+          </form>
         </Box>
       </ModalComponent>
     </div>
