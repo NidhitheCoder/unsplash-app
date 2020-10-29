@@ -7,12 +7,20 @@ export const fetchImagesSuccess = imagesCollection => ({
   payload: imagesCollection
 });
 
+export const fetchImageStart = () => ({
+  type:imageCollectionActionTypes.FETCH_IMAGES_START
+})
+
 export const fetchCollecitonsStartAsync = () => {
   return dispatch => {
+    dispatch(fetchImageStart())
     axios
       .get("/data")
-      .then(data => dispatch(fetchImagesSuccess(data.data)))
-      .catch(() => dispatch(fetchImagesSuccess([])));
+      .then(data =>
+        setTimeout(() => {
+          dispatch(fetchImagesSuccess(data.data))
+        }, 1000) )
+      .catch(() => dispatch(fetchImageStart()));
   };
 };
 

@@ -4,16 +4,22 @@ import { removeImage } from "./image-collection.utils";
 const INITIAL_STATE = {
   imageCollection: null,
   searchWord: "",
-  isFetching:false,
+  fetchComplete: ""
 };
 
 const imageCollectionReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case imageCollectionActionTypes.FETCH_IMAGES_START:
+      return {
+        ...state,
+        fetchComplete: false
+      };
+
     case imageCollectionActionTypes.FETCH_IMAGES_SUCCESS:
       return {
         ...state,
         imageCollection: action.payload,
-        isFetching:true
+        fetchComplete: true
       };
 
     case imageCollectionActionTypes.ADD_SINGLE_IMAGE_SUCCESS:

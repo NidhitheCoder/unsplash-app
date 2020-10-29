@@ -1,17 +1,27 @@
 import React from "react";
-import "./loading-spinner.styles.modules.scss";
+import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-const loadingSpinner = WrappedComponent => {
-  const loadSpinner = ({isLoading}) => {
-    return isLoading ? (
-      <div className="spinner-container">
-        <div className="spinner">Fetching Data....</div>
-      </div>
-    ) : (
-      <WrappedComponent />
-    );
-  };
-  return loadSpinner;
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex",
+    height:'100vh',
+    justifyContent:"center",
+    alignItems:"center",
+    "& > * + * ": {
+      marginLeft: theme.spacing(2)
+    }
+  },
+  spinner :{
+    color:"#3db46d"
+  }
+}));
+
+export const LoadingSpinner = () => {
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      <CircularProgress className={classes.spinner}/>
+    </div>
+  );
 };
-
-export default loadingSpinner;
