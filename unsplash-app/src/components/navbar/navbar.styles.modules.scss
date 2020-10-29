@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: space-between;
   height: 100px;
-  width:100%;
+  width: 100%;
   flex-wrap: wrap;
 
   .header-part {
@@ -56,6 +56,24 @@
         padding: 1px 3px 1px 0;
         margin-left: 30px;
         width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .header {
+    height: 75px;
+    .header-part {
+      width: 100%;
+      padding:5vw 3vw 0 3vw;
+
+      .search {
+        min-width: 103px;
+        height: 36px;
+      };
+      &:nth-child(2){
+        justify-content: end;
       }
     }
   }

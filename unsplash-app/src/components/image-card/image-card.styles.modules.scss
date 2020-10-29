@@ -3,16 +3,15 @@
   width: 100%;
   margin: 10px;
   display: inline-block;
-  min-height: 230px;
+  min-height: 100px;
   max-height: 450px;
 
   .background-shade {
     position: absolute;
-    transition: .5s ease;
+    transition: 0.5s ease;
     height: 100%;
     width: 100%;
   }
-
 
   h3 {
     position: absolute;
@@ -24,19 +23,25 @@
     font-weight: 500;
     line-height: 21.94px;
   }
-  
-  &:hover .delete {
-    display:"block"
-   }
 
-  &:hover h3{
+  &:hover .delete {
+    display: "block";
+  }
+
+  &:hover h3 {
     display: block;
   }
-  &:hover .background-shade{
-      background: rgba(0,0,0,0.38)
+  &:hover .background-shade {
+    background: rgba(0, 0, 0, 0.38);
   }
 
-  &:hover{
+  &:hover {
     z-index: 3;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .image-card {
+    margin: 1vh 0;
   }
 }

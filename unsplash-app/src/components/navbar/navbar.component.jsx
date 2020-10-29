@@ -12,6 +12,7 @@ const Navbar = () => (
       <SearchComponent />
     </div>
     <div className="header-part">
+      <div />
       <AddPhoto />
     </div>
   </div>
