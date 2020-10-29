@@ -19,17 +19,24 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700,
     fontStyle: "normal",
     lineHeight: "19.07px",
-    minWidth: "137px",
+    minWidth: "80px",
     height: "55px",
     "&:hover": {
       backgroundColor: "#3db46d"
+    },
+    '@media (max-width:560px)': {
+      height:"30px",
     }
   },
   cancel: {
     borderRadius: theme.spacing(3),
     height: "55px",
     minWidth: "137px",
-    color: "#BDBDBD"
+    color: "#BDBDBD",
+    '@media (max-width:560px)':{
+      height:"30px",
+      margin:"0 5vw"
+    }
   }
 }));
 
@@ -88,7 +95,7 @@ const AddPhoto = ({ addSingleImage }) => {
                 placeholder="https://images.unsplash.com/photo-16032866..."
               />
             </Grid>
-            <Grid item xs={8}></Grid>
+            <Grid item xs={5}></Grid>
             <Grid item xs={2}>
               <CustomButton
                 caption="cancel"
