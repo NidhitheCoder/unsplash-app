@@ -3,11 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import {connect} from 'react-redux';
 
 import ModalComponent from "../modal/modal.component";
 import CustomButton from "../custom-button/custom-button.component";
 import TextField from "@material-ui/core/TextField";
-import { AddNewImage } from "../../api_calls/api-calls";
+import { addSingleImageToStoreAsync } from "../../redux/image-collection/image-collection.action";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -46,8 +47,7 @@ const AddPhoto = ({ addSingleImage }) => {
   const AddImage = async () => {
     const label = document.getElementById("photoLabel");
     const url = document.getElementById("photoUrl");
-    const response = await AddNewImage(102, label.value, url.value, 112);
-    addSingleImage(response);
+    addSingleImage(label.value, url.value, 112);
     setOpen(false);
   };
 
@@ -111,4 +111,8 @@ const AddPhoto = ({ addSingleImage }) => {
   );
 };
 
-export default AddPhoto;
+const mapDispatchToProps = dispatch => ({
+  addSingleImage:(title,url,userId) => dispatch(addSingleImageToStoreAsync(title,url,userId))
+})
+
+export default connect(null,mapDispatchToProps)(AddPhoto);

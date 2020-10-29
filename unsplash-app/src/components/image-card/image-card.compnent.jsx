@@ -3,6 +3,7 @@ import "./image-card.styles.modules.scss";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
 import ModalComponent from "../modal/modal.component";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -10,7 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 
 import CustomButton from "../custom-button/custom-button.component";
-import { deleteImgwithId } from "../../api_calls/api-calls";
+import { removeImageFromStoreAsync } from "../../redux/image-collection/image-collection.action";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -51,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ImageCard = ({ data, imageCollection }) => {
+const ImageCard = ({ data, removeImage }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -62,7 +63,7 @@ const ImageCard = ({ data, imageCollection }) => {
   };
 
   const deleteImage = () => {
-    deleteImgwithId(data.id, imageCollection);
+    removeImage(data);
     setOpen(false);
   };
 
@@ -90,44 +91,49 @@ const ImageCard = ({ data, imageCollection }) => {
           Are you sure ?
         </Typography>
         <Box mt={3}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="caption">Password</Typography>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                required
-                placeholder="***********"
-                id="password"
-                name="password"
-                autoComplete="password"
-                autoFocus
-              />
+          <form noValidate>
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography variant="caption">Password</Typography>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  required
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="password"
+                />
+              </Grid>
+              <Grid item xs={6} />
+              <Grid item xs={3}>
+                <CustomButton
+                  disabled
+                  caption="Cancel"
+                  classes={classes.cancel}
+                  onclick={handleClose}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <CustomButton
+                  variant="contained"
+                  classes={classes.cancel}
+                  color="secondary"
+                  caption="Delete"
+                  onclick={deleteImage}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={6} />
-            <Grid item xs={3}>
-              <CustomButton
-                disabled
-                caption="Cancel"
-                classes={classes.cancel}
-                onclick={handleClose}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <CustomButton
-                variant="contained"
-                classes={classes.cancel}
-                color="secondary"
-                caption="Delete"
-                onclick={deleteImage}
-              />
-            </Grid>
-          </Grid>
+          </form>
         </Box>
       </ModalComponent>
     </div>
   );
 };
 
-export default ImageCard;
+const mapDispatchToProps = dispatch => ({
+  removeImage: image => dispatch(removeImageFromStoreAsync(image))
+});
+
+export default connect(null, mapDispatchToProps)(ImageCard);

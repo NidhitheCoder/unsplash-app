@@ -164,7 +164,6 @@
   DELETE /posts/1
   ```
 
-```
 
 >> referance for Json server Tutorial: http://zetcode.com/javascript/jsonserver/
 
@@ -182,4 +181,11 @@
 ```
 
 - If redux-thunk middleware is enabled, any time you attempt to dispatch a function instead of an object the middleware will call that function with dispatch  method itself as the first argument.
-```
+
+- React -> (user action) -> Action Creator -> Action -> Middleware -> Reducers -> State -> Again React
+
+- Dispatch : Dispatch method is a method apart the the redux store that contain our application state. It makes sure the action get sent to all reducers.
+
+ Redux-thunk Referance : https://www.youtube.com/watch?v=1QI-UE3-0PU
+
+referance for dependency error when running our app : https://github.com/creativetimofficial/argon-dashboard-react/issues/28
