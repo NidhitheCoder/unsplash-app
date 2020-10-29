@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Copyright } from "../copyright/copyright.component";
 import CustomButton from "../custom-button/custom-button.component";
+import auth from "../../auth/auth";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = () => {
+const Login = props => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
@@ -80,7 +81,11 @@ const Login = () => {
             color="primary"
             caption="Sign in"
             classes={classes.submit}
-            onclick={() => (alert("sign in successfully"))}
+            onclick={() => {
+              auth.login(() => {
+                props.history.push("/home");
+              });
+            }}
           />
           <Grid container>
             <Grid item xs>
