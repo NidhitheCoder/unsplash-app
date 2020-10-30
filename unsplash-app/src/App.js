@@ -4,14 +4,16 @@ import { Switch, Route } from "react-router-dom";
 
 import MainPage from "./pages/main-page/main-page.component";
 import LoginAndSignUp from "./pages/login-and-signUp/login-and-SignUp.component";
+import { ProtectedRoute } from "./auth/protected-route";
 
-function App() {
+const App = () => {
   return (
     <Switch>
-      <Route exact path="/" component={MainPage} />
-      <Route path="/login" component={LoginAndSignUp} />
+      <ProtectedRoute exact path="/home" component={MainPage} />
+      <Route exact path="/" component={LoginAndSignUp} />
+      <Route path="*" component={() => "404 NOT FOUND"} />
     </Switch>
   );
-}
+};
 
 export default App;

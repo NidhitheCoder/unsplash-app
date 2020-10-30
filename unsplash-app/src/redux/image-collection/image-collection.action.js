@@ -1,6 +1,17 @@
 import imageCollectionActionTypes from "./image-collection.types";
 import axios from "../../axios/axios";
 
+//toggleUsers helps to toggle login and signup page in a single route 
+export const toggleUser =() =>({
+  type:imageCollectionActionTypes.TOGGLE_USER_TYPE
+})
+
+export const toggleUserAsync = () => {
+  return dispatch => {
+    dispatch(toggleUser());
+  }
+}
+
 // Images fetch section
 export const fetchImagesSuccess = imagesCollection => ({
   type: imageCollectionActionTypes.FETCH_IMAGES_SUCCESS,
@@ -15,7 +26,7 @@ export const fetchCollecitonsStartAsync = () => {
   return dispatch => {
     dispatch(fetchImageStart())
     axios
-      .get("/data")
+      .get("/images")
       .then(data =>
         setTimeout(() => {
           dispatch(fetchImagesSuccess(data.data))
@@ -33,7 +44,7 @@ export const addSingleImageToStore = singleImage => ({
 export const addSingleImageToStoreAsync = (title, url, userId) => {
   return dispatch => {
     axios
-      .post(`/data/`, {
+      .post(`/images/`, {
         userID: userId,
         title: title,
         imgUrl: url
@@ -50,7 +61,7 @@ export const removeImageFromStore = image => ({
 
 export const removeImageFromStoreAsync = image => {
   return dispatch => {
-    axios.delete(`/data/${image.id}`).then(res => {
+    axios.delete(`/images/${image.id}`).then(res => {
       if (res.request.status === 200) {
         dispatch(removeImageFromStore(image));
       }

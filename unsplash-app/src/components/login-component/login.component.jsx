@@ -14,6 +14,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Copyright } from "../copyright/copyright.component";
 import CustomButton from "../custom-button/custom-button.component";
+import auth from "../../auth/auth";
+import { toggleUserAsync } from "../../redux/image-collection/image-collection.action";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -32,10 +35,14 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  link:{
+    cursor:"pointer"
   }
 }));
 
-const Login = () => {
+const Login = props => {
+  const {toggleUser} = props;
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
@@ -80,7 +87,11 @@ const Login = () => {
             color="primary"
             caption="Sign in"
             classes={classes.submit}
-            onclick={() => (alert("sign in successfully"))}
+            onclick={() => {
+              auth.login(() => {
+                props.history.push("/home");
+              });
+            }}
           />
           <Grid container>
             <Grid item xs>
@@ -89,7 +100,7 @@ const Login = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link className={classes.link} variant="body2" onClick={toggleUser}>
                 {"Dont you have an account? Sign Up"}
               </Link>
             </Grid>
@@ -103,4 +114,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  toggleUser: () => dispatch(toggleUserAsync())
+}) 
+
+export default connect(null,mapDispatchToProps)(Login);

@@ -1,6 +1,7 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
+import { connect } from "react-redux";
 // import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -12,6 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Copyright } from "../copyright/copyright.component";
 import CustomButton  from '../custom-button/custom-button.component';
+
+import {toggleUserAsync} from '../../redux/image-collection/image-collection.action';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -30,10 +33,14 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  link:{
+    cursor:'pointer'
   }
 }));
 
-const SignUp = () => {
+const SignUp = (props) => {
+  const {toggleUser} = props
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
@@ -105,11 +112,11 @@ const SignUp = () => {
             classes={classes.submit}
           />
           <Grid container justify="flex-end">
-            <grid item margin={4}>
-              <Link href="#" variant="body2">
+            <Grid item margin={4}>
+              <Link className={classes.link} variant="body2" onClick={toggleUser}>
                 Already have an account ? Sign in
               </Link>
-            </grid>
+            </Grid>
           </Grid>
         </form>
       </div>
@@ -120,4 +127,8 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => ({
+toggleUser:() => dispatch(toggleUserAsync())
+});
+
+export default connect(null,mapDispatchToProps)(SignUp);

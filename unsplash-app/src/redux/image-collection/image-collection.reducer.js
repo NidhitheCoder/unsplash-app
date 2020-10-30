@@ -4,11 +4,18 @@ import { removeImage } from "./image-collection.utils";
 const INITIAL_STATE = {
   imageCollection: null,
   searchWord: "",
-  fetchComplete: ""
+  fetchComplete: "",
+  newUser: false
 };
 
 const imageCollectionReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case imageCollectionActionTypes.TOGGLE_USER_TYPE:
+      return {
+        ...state,
+        newUser: !state.newUser
+      };
+
     case imageCollectionActionTypes.FETCH_IMAGES_START:
       return {
         ...state,
