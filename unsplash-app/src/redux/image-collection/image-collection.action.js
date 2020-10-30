@@ -12,6 +12,31 @@ export const toggleUserAsync = () => {
   }
 }
 
+// User login
+const headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'JWT fefege...'
+}
+
+const loginWithCredentials = (UID) => ({
+  type:imageCollectionActionTypes.ADD_USER_ID,
+  payload:UID
+})
+
+export const loginWithCredentialsAsync = (userName,password) => {
+  return dispatch => {
+    axios.get('/login')
+    .then(res => { 
+      localStorage.setItem("token",res.data.token)
+      dispatch(loginWithCredentials(res.data.user.userId))
+    })
+    // ,{
+    //   email:userName,
+    //   password:password
+    // },{headers:headers}
+  }
+}
+
 // Images fetch section
 export const fetchImagesSuccess = imagesCollection => ({
   type: imageCollectionActionTypes.FETCH_IMAGES_SUCCESS,
@@ -44,7 +69,7 @@ export const addSingleImageToStore = singleImage => ({
 export const addSingleImageToStoreAsync = (title, url, userId) => {
   return dispatch => {
     axios
-      .post(`/images/`, {
+      .post(`/images`, {
         userID: userId,
         title: title,
         imgUrl: url
