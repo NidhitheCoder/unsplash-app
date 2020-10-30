@@ -17,7 +17,6 @@ class ImageCollection extends React.Component {
     imgCollectionFromStore = imgCollectionFromStore
       ? imgCollectionFromStore
       : [];
-    console.log(fetchComplete);
     let keyword = searchKeyword ? searchKeyword : "";
     const filteredArray = imgCollectionFromStore.filter(image => {
       return image.title.toLowerCase().includes(keyword.toLowerCase());
