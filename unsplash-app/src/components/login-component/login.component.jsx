@@ -17,6 +17,7 @@ import CustomButton from "../custom-button/custom-button.component";
 import auth from "../../auth/auth";
 import { toggleUserAsync,loginWithCredentialsAsync } from "../../redux/image-collection/image-collection.action";
 import { connect } from "react-redux";
+import  PrimarySearchAppBar from '../demo-nav/demo_nav';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -54,6 +55,8 @@ const Login = props => {
     });
   };
   return (
+    <div>
+    <PrimarySearchAppBar />
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -120,7 +123,8 @@ const Login = props => {
         <Copyright />
       </Box>
     </Container>
-  );
+    </div>
+    );
 };
 
 const mapDispatchToProps = dispatch => ({
