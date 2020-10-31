@@ -6,11 +6,18 @@ const INITIAL_STATE = {
   searchWord: "",
   fetchComplete: "",
   newUser: false,
-  userId: ""
+  userId: "",
+  user:""
 };
 
 const imageCollectionReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+
+    case imageCollectionActionTypes.ADD_USER:
+      return{
+        ...state,
+        user:action.payload
+      }
     case imageCollectionActionTypes.ADD_USER_ID:
       return {
         ...state,

@@ -14,7 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Copyright } from "../copyright/copyright.component";
 import CustomButton  from '../custom-button/custom-button.component';
 
-import {toggleUserAsync} from '../../redux/image-collection/image-collection.action';
+import {toggleUserAsync, signUpWithCredentialAsync} from '../../redux/image-collection/image-collection.action';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -40,7 +40,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignUp = (props) => {
-  const {toggleUser} = props
+  const {toggleUser,userSignUp} = props;
+
+  const signUpWithCredential =() => {
+    const  username = document.getElementById('email').value;
+    const password = document.getElementById("password").value;
+    userSignUp();
+  }
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
@@ -81,6 +87,7 @@ const SignUp = (props) => {
             <Grid item xs={12}>
               <TextField
                 autoComplete="email"
+                margin="normal"
                 name="email"
                 variant="outlined"
                 required
@@ -92,14 +99,15 @@ const SignUp = (props) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                autoComplete="current-Password"
+                autoComplete="Password"
+                margin="normal"
                 name="password"
                 variant="outlined"
+                type="password"
                 required
                 fullWidth
                 id="password"
                 label="Password"
-                autoFocus
               />
             </Grid>
           </Grid>
@@ -110,6 +118,7 @@ const SignUp = (props) => {
             variant="contained"
             color="primary"
             classes={classes.submit}
+            onclick={signUpWithCredential}
           />
           <Grid container justify="flex-end">
             <Grid item margin={4}>
@@ -128,7 +137,8 @@ const SignUp = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-toggleUser:() => dispatch(toggleUserAsync())
+toggleUser:() => dispatch(toggleUserAsync()),
+userSignUp:() => dispatch(signUpWithCredentialAsync())
 });
 
 export default connect(null,mapDispatchToProps)(SignUp);
