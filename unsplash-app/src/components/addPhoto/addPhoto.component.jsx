@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 
 import ModalComponent from "../modal/modal.component";
 import CustomButton from "../custom-button/custom-button.component";
@@ -13,6 +13,10 @@ import { addSingleImageToStoreAsync } from "../../redux/image-collection/image-c
 const useStyles = makeStyles(theme => ({
   button: {
     backgroundColor: "#3db46d",
+    position: "absolute",
+    right: "2vw",
+    top: "2vh",
+    width: "10vw",
     color: "#fff",
     borderRadius: theme.spacing(3),
     fontSize: "14px",
@@ -24,8 +28,8 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       backgroundColor: "#3db46d"
     },
-    '@media (max-width:560px)': {
-      height:"30px",
+    "@media (max-width:560px)": {
+      height: "30px"
     }
   },
   cancel: {
@@ -33,10 +37,13 @@ const useStyles = makeStyles(theme => ({
     height: "55px",
     minWidth: "137px",
     color: "#BDBDBD",
-    '@media (max-width:560px)':{
-      height:"30px",
-      margin:"0 5vw"
+    "@media (max-width:560px)": {
+      height: "30px",
+      margin: "0 5vw"
     }
+  },
+  buttonContainer: {
+    position: "relative"
   }
 }));
 
@@ -103,7 +110,7 @@ const AddPhoto = ({ addSingleImage }) => {
                 onclick={handleClose}
               />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={2} className={classes.buttonContainer}>
               <CustomButton
                 caption="Submit"
                 classes={classes.button}
@@ -119,7 +126,8 @@ const AddPhoto = ({ addSingleImage }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addSingleImage:(title,url,userId) => dispatch(addSingleImageToStoreAsync(title,url,userId))
-})
+  addSingleImage: (title, url, userId) =>
+    dispatch(addSingleImageToStoreAsync(title, url, userId))
+});
 
-export default connect(null,mapDispatchToProps)(AddPhoto);
+export default connect(null, mapDispatchToProps)(AddPhoto);
