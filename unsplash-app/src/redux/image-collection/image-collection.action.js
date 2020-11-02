@@ -1,16 +1,55 @@
 import imageCollectionActionTypes from "./image-collection.types";
 import axios from "../../axios/axios";
 
-//toggleUsers helps to toggle login and signup page in a single route 
-export const toggleUser =() =>({
-  type:imageCollectionActionTypes.TOGGLE_USER_TYPE
-})
+//toggleUsers helps to toggle login and signup page in a single route
+export const toggleUser = () => ({
+  type: imageCollectionActionTypes.TOGGLE_USER_TYPE
+});
 
 export const toggleUserAsync = () => {
   return dispatch => {
     dispatch(toggleUser());
-  }
-}
+  };
+};
+
+// User sign Up
+export const addUserDetailsFromSignUp = userId => ({
+  type: imageCollectionActionTypes.ADD_USER,
+  payload: userId
+});
+
+export const signUpWithCredentialAsync = () => {
+  return dispatch => {
+    axios.get("/signup").then(res=>{
+      console.log(res)
+    }).catch(err=>console.log("Error Hitting : ", err))
+  };
+};
+
+// User login
+
+// const headers = {
+//   'Content-Type': 'application/json',
+//   'Authorization': 'JWT fefege...'
+// }
+
+const addUserIdToStore = UID => ({
+  type: imageCollectionActionTypes.ADD_USER_ID,
+  payload: UID
+});
+
+export const loginWithCredentialsAsync = (userName, password) => {
+  return dispatch => {
+    axios.get("/login").then(res => {
+      localStorage.setItem("token", res.data.token);
+      dispatch(addUserIdToStore(res.data.user.userId));
+    });
+    // ,{
+    //   email:userName,
+    //   password:password
+    // },{headers:headers}
+  };
+};
 
 // Images fetch section
 export const fetchImagesSuccess = imagesCollection => ({
@@ -19,18 +58,19 @@ export const fetchImagesSuccess = imagesCollection => ({
 });
 
 export const fetchImageStart = () => ({
-  type:imageCollectionActionTypes.FETCH_IMAGES_START
-})
+  type: imageCollectionActionTypes.FETCH_IMAGES_START
+});
 
 export const fetchCollecitonsStartAsync = () => {
   return dispatch => {
-    dispatch(fetchImageStart())
+    dispatch(fetchImageStart());
     axios
       .get("/images")
       .then(data =>
         setTimeout(() => {
-          dispatch(fetchImagesSuccess(data.data))
-        }, 1000) )
+          dispatch(fetchImagesSuccess(data.data));
+        }, 1000)
+      )
       .catch(() => dispatch(fetchImageStart()));
   };
 };
@@ -44,7 +84,7 @@ export const addSingleImageToStore = singleImage => ({
 export const addSingleImageToStoreAsync = (title, url, userId) => {
   return dispatch => {
     axios
-      .post(`/images/`, {
+      .post(`/images`, {
         userID: userId,
         title: title,
         imgUrl: url
