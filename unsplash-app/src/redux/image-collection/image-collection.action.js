@@ -20,9 +20,10 @@ export const addUserDetailsFromSignUp = userId => ({
 
 export const signUpWithCredentialAsync = () => {
   return dispatch => {
-    axios.get("/signup").then(res=>{
-      console.log(res)
-    }).catch(err=>console.log("Error Hitting : ", err))
+    axios
+      .get("/signup")
+      .then(res => {})
+      .catch(err => console.log("Error Hitting : ", err));
   };
 };
 
@@ -39,11 +40,13 @@ const addUserIdToStore = UID => ({
 });
 
 export const loginWithCredentialsAsync = (userName, password) => {
-  return dispatch => {
-    axios.get("/login").then(res => {
-      localStorage.setItem("token", res.data.token);
-      dispatch(addUserIdToStore(res.data.user.userId));
+  return async(dispatch) => {
+    let response ;
+    await axios.get("/login").then((res) => {
+      response = res.data;
     });
+    localStorage.setItem("token", response.token);
+    dispatch(addUserIdToStore(response.user.userId));
     // ,{
     //   email:userName,
     //   password:password

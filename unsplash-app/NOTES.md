@@ -189,3 +189,16 @@
  Redux-thunk Referance : https://www.youtube.com/watch?v=1QI-UE3-0PU
 
 referance for dependency error when running our app : https://github.com/creativetimofficial/argon-dashboard-react/issues/28
+
+
+
+# json server auth
+
+- How to use ?
+   - npm init
+   - npm install --save json-server
+   - create db.json
+   - in package.json -> add  "json:server": "json-server --watch db.json"
+   - And run using " npm run json:server "
+
+- Referance for fake rest auth api - https://www.youtube.com/watch?v=1zkgdLZEdwM

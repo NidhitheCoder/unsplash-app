@@ -15,9 +15,11 @@ import Container from "@material-ui/core/Container";
 import { Copyright } from "../copyright/copyright.component";
 import CustomButton from "../custom-button/custom-button.component";
 import auth from "../../auth/auth";
-import { toggleUserAsync,loginWithCredentialsAsync } from "../../redux/image-collection/image-collection.action";
+import {
+  toggleUserAsync,
+  loginWithCredentialsAsync
+} from "../../redux/image-collection/image-collection.action";
 import { connect } from "react-redux";
-import  PrimarySearchAppBar from '../demo-nav/demo_nav';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -43,93 +45,93 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Login = props => {
-  const { toggleUser,userLogin } = props;
+  const { toggleUser, userLogin } = props;
   const classes = useStyles();
 
-  const loginWithCredential = () => {
-    const userName = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    userLogin(userName,password);
+  const loginWithCredential = async () => {
+    const userName = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    await userLogin(userName, password);
     auth.login(() => {
       props.history.push("/home");
     });
   };
+
   return (
     <div>
-    <PrimarySearchAppBar />
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutLinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            required
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            required
-            id="password"
-            name="password"
-            type="password"
-            label="Password"
-            autoComplete="password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember Me"
-          />
-          <CustomButton
-            type="submit"
-            variant="contained"
-            color="primary"
-            caption="Sign in"
-            classes={classes.submit}
-            onclick={loginWithCredential}
-          />
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot Password
-              </Link>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutLinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              id="password"
+              name="password"
+              type="password"
+              label="Password"
+              autoComplete="password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember Me"
+            />
+            <CustomButton
+              variant="contained"
+              color="primary"
+              caption="Sign in"
+              classes={classes.submit}
+              onclick={loginWithCredential}
+            />
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot Password
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link
+                  className={classes.link}
+                  variant="body2"
+                  onClick={toggleUser}
+                >
+                  {"Dont you have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link
-                className={classes.link}
-                variant="body2"
-                onClick={toggleUser}
-              >
-                {"Dont you have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
     </div>
-    );
+  );
 };
 
 const mapDispatchToProps = dispatch => ({
   toggleUser: () => dispatch(toggleUserAsync()),
-  userLogin : () => dispatch(loginWithCredentialsAsync())
+  userLogin: (userName, password) =>
+    dispatch(loginWithCredentialsAsync(userName, password))
 });
 
 export default connect(null, mapDispatchToProps)(Login);

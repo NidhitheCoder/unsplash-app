@@ -1,8 +1,6 @@
 .search{
     position: relative;
     color:#bdbdbd;
-    border: 1px solid #bdbdbd;
-    background-color: rgba(255,255,255,0.1);
     margin-right: 2px;
     margin-left: 0px;
     border-radius: 24px;
@@ -14,10 +12,6 @@
     display: flex;
     align-items: center;
     padding:0 10px;
-
-    &:hover{
-        background-color: rgba(255,255,255,0.1);
-    }
 
     .search-icon{
         padding:0 2px;
@@ -39,5 +33,6 @@
 @media screen and (max-width :780px){
     .search{
         height: 30px;
+        font-size: 10px;
     }
 }
