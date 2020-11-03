@@ -7,7 +7,7 @@ class MainPage extends React.Component {
   render() {
     return (
       <div className="main-page-container">
-        <Navbar />
+        <Navbar {...this.props}/>
         <ImageCollection />
       </div>
     );

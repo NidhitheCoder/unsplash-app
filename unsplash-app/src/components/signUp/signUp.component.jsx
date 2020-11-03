@@ -43,9 +43,9 @@ const SignUp = (props) => {
   const {toggleUser,userSignUp} = props;
 
   const signUpWithCredential =() => {
-    const  username = document.getElementById('email').value;
+    const  userName = document.getElementById('email').value;
     const password = document.getElementById("password").value;
-    userSignUp();
+    userSignUp(userName,password);
   }
   const classes = useStyles();
   return (
@@ -112,7 +112,6 @@ const SignUp = (props) => {
             </Grid>
           </Grid>
           <CustomButton
-            type="submit"
             fullWidth
             caption="Sign Up"
             variant="contained"
@@ -138,7 +137,7 @@ const SignUp = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
 toggleUser:() => dispatch(toggleUserAsync()),
-userSignUp:() => dispatch(signUpWithCredentialAsync())
+userSignUp:(userName,password) => dispatch(signUpWithCredentialAsync(userName,password))
 });
 
 export default connect(null,mapDispatchToProps)(SignUp);

@@ -51,7 +51,7 @@ const Login = props => {
   const loginWithCredential = () => {
     const userName = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    userLogin(userName, password);
+    userLogin(userName,password);
     auth.login(() => {
       props.history.push("/home");
     });
@@ -95,7 +95,6 @@ const Login = props => {
               label="Remember Me"
             />
             <CustomButton
-              type="submit"
               variant="contained"
               color="primary"
               caption="Sign in"
@@ -130,7 +129,7 @@ const Login = props => {
 
 const mapDispatchToProps = dispatch => ({
   toggleUser: () => dispatch(toggleUserAsync()),
-  userLogin: () => dispatch(loginWithCredentialsAsync())
+  userLogin: (userName,password) => dispatch(loginWithCredentialsAsync(userName,password))
 });
 
 export default connect(null, mapDispatchToProps)(Login);
