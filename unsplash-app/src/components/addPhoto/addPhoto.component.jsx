@@ -23,13 +23,16 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700,
     fontStyle: "normal",
     lineHeight: "19.07px",
-    minWidth: "80px",
+    minWidth: "100px",
     height: "55px",
     "&:hover": {
       backgroundColor: "#3db46d"
     },
     "@media (max-width:560px)": {
-      height: "30px"
+      height: "30px",
+      width:"100px",
+      fontSize:"10px",
+      marginRight:"1vw"
     }
   },
   cancel: {

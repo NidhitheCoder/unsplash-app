@@ -39,13 +39,14 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       backgroundColor: fade(theme.palette.common.black, 0.25)
     },
-    height: "55px",
+    height: "30px",
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "50vw",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
-      width: "25vw"
+      width: "25vw",
+      height:"55px"
     }
   },
   searchIcon: {
@@ -86,24 +87,24 @@ const useStyles = makeStyles(theme => ({
 
 const PrimarySearchAppBar = (props) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
+  // const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = event => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleProfileMenuOpen = event => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
+  // const handleMenuClose = () => {
+  //   setAnchorEl(null);
+  //   handleMobileMenuClose();
+  // };
 
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -113,24 +114,11 @@ const PrimarySearchAppBar = (props) => {
     auth.logout(() => {
       props.history.push("/");
     });
-    handleMenuClose();
+    // handleMenuClose();
+    handleMobileMenuClose();
   };
 
   const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Username</MenuItem>
-      <MenuItem onClick={logout}>Logout</MenuItem>
-    </Menu>
-  );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -143,7 +131,7 @@ const PrimarySearchAppBar = (props) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={handleMobileMenuClose}>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
@@ -154,6 +142,7 @@ const PrimarySearchAppBar = (props) => {
         </IconButton>
         <p>Profile</p>
       </MenuItem>
+      <MenuItem onClick={logout}>Logout</MenuItem>
     </Menu>
   );
 
@@ -167,7 +156,7 @@ const PrimarySearchAppBar = (props) => {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              onClick={handleMobileMenuOpen}
               color="inherit"
             >
               <AccountCircle />
@@ -195,7 +184,6 @@ const PrimarySearchAppBar = (props) => {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
     </div>
   );
 };
