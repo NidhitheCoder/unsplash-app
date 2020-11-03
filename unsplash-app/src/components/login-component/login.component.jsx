@@ -48,17 +48,13 @@ const Login = props => {
   const { toggleUser, userLogin } = props;
   const classes = useStyles();
 
-  const loginWithCredential = () => {
+  const loginWithCredential = async () => {
     const userName = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    if (!localStorage.getItem("token")) {
-      userLogin(userName, password);
-    }
-    setTimeout(() => {
-      auth.login(() => {
-        props.history.push("/home");
-      });
-    }, 200);
+    await userLogin(userName, password);
+    auth.login(() => {
+      props.history.push("/home");
+    });
   };
 
   return (
