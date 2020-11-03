@@ -51,11 +51,16 @@ const Login = props => {
   const loginWithCredential = () => {
     const userName = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    userLogin(userName,password);
-    auth.login(() => {
-      props.history.push("/home");
-    });
+    if (!localStorage.getItem("token")) {
+      userLogin(userName, password);
+    }
+    setTimeout(() => {
+      auth.login(() => {
+        props.history.push("/home");
+      });
+    }, 200);
   };
+
   return (
     <div>
       <Container component="main" maxWidth="xs">
@@ -129,7 +134,8 @@ const Login = props => {
 
 const mapDispatchToProps = dispatch => ({
   toggleUser: () => dispatch(toggleUserAsync()),
-  userLogin: (userName,password) => dispatch(loginWithCredentialsAsync(userName,password))
+  userLogin: (userName, password) =>
+    dispatch(loginWithCredentialsAsync(userName, password))
 });
 
 export default connect(null, mapDispatchToProps)(Login);

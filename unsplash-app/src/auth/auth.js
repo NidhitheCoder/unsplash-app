@@ -1,5 +1,3 @@
-
-
 class Auth {
   constructor() {
     this.authenticated = false;
@@ -16,7 +14,7 @@ class Auth {
 
   logout(callback) {
     this.authenticated = false;
-    localStorage.removeItem("token")
+    localStorage.removeItem("token");
     callback();
   }
 
