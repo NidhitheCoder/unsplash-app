@@ -35,9 +35,11 @@ const useStyles = makeStyles(theme => ({
   search: {
     position: "relative",
     borderRadius: theme.spacing(3),
-    backgroundColor: fade(theme.palette.common.black, 0.15),
+    color:"#bdbdbd",
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    border:"1px solid rgba(0,0,0,0.25)",
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.black, 0.25)
+      backgroundColor: fade(theme.palette.common.black, 0.03)
     },
     height: "30px",
     marginRight: theme.spacing(2),
@@ -59,7 +61,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center"
   },
   inputRoot: {
-    color: "inherit"
+    color: "#bdbdbd"
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -87,24 +89,13 @@ const useStyles = makeStyles(theme => ({
 
 const PrimarySearchAppBar = (props) => {
   const classes = useStyles();
-  // const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  // const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  // const handleProfileMenuOpen = event => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
 
-  // const handleMenuClose = () => {
-  //   setAnchorEl(null);
-  //   handleMobileMenuClose();
-  // };
 
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -114,7 +105,6 @@ const PrimarySearchAppBar = (props) => {
     auth.logout(() => {
       props.history.push("/");
     });
-    // handleMenuClose();
     handleMobileMenuClose();
   };
 
