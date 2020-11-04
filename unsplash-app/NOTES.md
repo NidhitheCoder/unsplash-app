@@ -202,3 +202,5 @@ referance for dependency error when running our app : https://github.com/creativ
    - And run using " npm run json:server "
 
 - Referance for fake rest auth api - https://www.youtube.com/watch?v=1zkgdLZEdwM
+
+- Referance for Node js JWT auth - https://www.youtube.com/watch?v=7nafaH9SddU
