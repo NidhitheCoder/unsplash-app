@@ -90,7 +90,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PrimarySearchAppBar = (props) => {
-  const  {logoutFunc} = props
+  const  {logoutFunc,userDetails} = props;
   const classes = useStyles();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -134,7 +134,7 @@ const PrimarySearchAppBar = (props) => {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>{userDetails.username}</p>
       </MenuItem>
       <MenuItem onClick={logout}>Logout</MenuItem>
     </Menu>
@@ -182,8 +182,12 @@ const PrimarySearchAppBar = (props) => {
   );
 };
 
+const mapStatetoProps = state => ({
+  userDetails :state.imageCollection.user
+})
+
 const mapDispatchToProps =(dispatch) => ({
 logoutFunc : () => dispatch(logoutAsync())
 })
 
-export default connect(null,mapDispatchToProps)(PrimarySearchAppBar);
+export default connect(mapStatetoProps,mapDispatchToProps)(PrimarySearchAppBar);

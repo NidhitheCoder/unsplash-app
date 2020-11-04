@@ -6,7 +6,6 @@ const INITIAL_STATE = {
   searchWord: "",
   fetchComplete: "",
   newUser: false,
-  userId: "",
   user:""
 };
 
@@ -18,11 +17,12 @@ const imageCollectionReducer = (state = INITIAL_STATE, action) => {
         ...state,
         user:action.payload
       }
-    case imageCollectionActionTypes.ADD_USER_ID:
-      return {
-        ...state,
-        userId: action.payload
-      };
+
+      case imageCollectionActionTypes.REMOVE_USER:
+        return{
+          ...state,
+          user:""
+        };
 
     case imageCollectionActionTypes.TOGGLE_USER_TYPE:
       return {

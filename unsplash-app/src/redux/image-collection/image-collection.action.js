@@ -19,10 +19,6 @@ export const toggleUserAsync = () => {
 };
 
 // User sign Up
-export const addUserDetailsFromSignUp = userId => ({
-  type: imageCollectionActionTypes.ADD_USER,
-  payload: userId
-});
 
 export const signUpWithCredentialAsync = () => {
   return dispatch => {
@@ -38,27 +34,30 @@ export const signUpWithCredentialAsync = () => {
 };
 
 // User login
-const addUserIdToStore = UID => ({
-  type: imageCollectionActionTypes.ADD_USER_ID,
-  payload: UID
+export const addUserDetailsToStore = user => ({
+  type: imageCollectionActionTypes.ADD_USER,
+  payload: user
 });
 
 export const loginWithCredentialsAsync = (userName, password) => {
   return async(dispatch) => {
     let response ;
-    await axios.get("/login").then((res) => {
+    await axios.get("/login",{email:userName,password:password}).then((res) => {
       response = res.data;
     });
     localStorage.setItem("token", response.token);
-    dispatch(addUserIdToStore(response.user.userId));
-    // ,{
-    //   email:userName,
-    //   password:password
-    // },{headers:headers}
+    dispatch(addUserDetailsToStore(response.user));
   };
 };
 
 // user Logout 
+
+export const removeUserFromStore = () => ({
+  type:imageCollectionActionTypes.REMOVE_USER,
+})
+
+// export const Logout
+
 export const logoutAsync = () => {
   return async(dispatch) => {
     let response;
