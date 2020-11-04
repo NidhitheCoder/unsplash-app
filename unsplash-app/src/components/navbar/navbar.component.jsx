@@ -11,6 +11,8 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import AddPhoto from "../addPhoto/addPhoto.component";
 import Search from "../search/search.component";
 import auth from "../../auth/auth";
+import { logoutAsync } from "../../redux/image-collection/image-collection.action";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   navbar: {
@@ -88,6 +90,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PrimarySearchAppBar = (props) => {
+  const  {logoutFunc,userDetails} = props;
   const classes = useStyles();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -102,6 +105,7 @@ const PrimarySearchAppBar = (props) => {
   };
 
   const logout = () => {
+    logoutFunc();
     auth.logout(() => {
       props.history.push("/");
     });
@@ -130,7 +134,7 @@ const PrimarySearchAppBar = (props) => {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>{userDetails.username}</p>
       </MenuItem>
       <MenuItem onClick={logout}>Logout</MenuItem>
     </Menu>
@@ -178,4 +182,12 @@ const PrimarySearchAppBar = (props) => {
   );
 };
 
-export default PrimarySearchAppBar;
+const mapStatetoProps = state => ({
+  userDetails :state.imageCollection.user
+})
+
+const mapDispatchToProps =(dispatch) => ({
+logoutFunc : () => dispatch(logoutAsync())
+})
+
+export default connect(mapStatetoProps,mapDispatchToProps)(PrimarySearchAppBar);

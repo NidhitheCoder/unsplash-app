@@ -14,7 +14,6 @@ class Auth {
 
   logout(callback) {
     this.authenticated = false;
-    localStorage.removeItem("token");
     callback();
   }
 
