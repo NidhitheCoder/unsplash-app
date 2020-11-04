@@ -17,7 +17,8 @@ import CustomButton from "../custom-button/custom-button.component";
 import auth from "../../auth/auth";
 import {
   toggleUserAsync,
-  loginWithCredentialsAsync
+  loginWithCredentialsAsync,
+  loginWithRefreshToken
 } from "../../redux/image-collection/image-collection.action";
 import { connect } from "react-redux";
 
@@ -47,6 +48,13 @@ const useStyles = makeStyles(theme => ({
 const Login = props => {
   const { toggleUser, userLogin } = props;
   const classes = useStyles();
+  const refresh_token = localStorage.getItem("refresh_token");
+  if (refresh_token) {
+    loginWithRefreshToken(refresh_token);
+    auth.login(() => {
+      props.history.push("/home");
+    });
+  }
 
   const loginWithCredential = async () => {
     const userName = document.getElementById("email").value;

@@ -3,7 +3,7 @@ import axios from "../../axios/axios";
 
 const headers = {
   "Content-Type": "application/json",
-  Authorization: localStorage.getItem("refresh_token")
+  Authorization: localStorage.getItem("access_token")
 };
 
 //toggleUsers helps to toggle login and signup page in a single route
@@ -19,18 +19,18 @@ export const toggleUserAsync = () => {
 
 // User sign Up
 
-export const signUpWithCredentialAsync = (userName,password) => {
-  return async(dispatch) => {
+export const signUpWithCredentialAsync = (userName, password) => {
+  return async dispatch => {
     let response;
-   await axios
+    await axios
       .get("/signup")
       .then(res => {
         response = res;
       })
       .catch(err => alert("Error Hitting : ", err));
-    localStorage.setItem("access_token",response.data.access_token);
+    localStorage.setItem("access_token", response.data.access_token);
     localStorage.setItem("refresh_token", response.data.refresh_token);
-    dispatch(addUserDetailsToStore(userName))
+    dispatch(addUserDetailsToStore(userName));
   };
 };
 
@@ -43,14 +43,32 @@ export const addUserDetailsToStore = user => ({
 export const loginWithCredentialsAsync = (userName, password) => {
   return async dispatch => {
     let response;
+
     await axios
       .get("/login", { email: userName, password: password })
       .then(res => {
         response = res.data;
       });
-    localStorage.setItem("refresh_token", response.refresh_token);
+
+    localStorage.setItem("access_token", response.access_token);
+    localStorage.setItem("refresh_token",response.refresh_token)
     dispatch(addUserDetailsToStore(userName));
   };
+};
+
+// Login with refresh token
+export const loginWithRefreshToken = async refresh_token => {
+  let response;
+  await axios
+    .get("/login", {
+      headers: {
+        Authorization: refresh_token
+      }
+    })
+    .then(res => (response = res.data));
+
+  localStorage.setItem("access_token", response.access_token);
+  localStorage.setItem("refresh_token",response.refresh_token)
 };
 
 // user Logout
@@ -58,8 +76,6 @@ export const loginWithCredentialsAsync = (userName, password) => {
 export const removeUserFromStore = () => ({
   type: imageCollectionActionTypes.REMOVE_USER
 });
-
-// export const Logout
 
 export const logoutAsync = () => {
   return async dispatch => {
@@ -69,6 +85,7 @@ export const logoutAsync = () => {
     });
     if (response.status === 200 && response.data.Authorization === "") {
       localStorage.removeItem("refresh_token");
+      localStorage.removeItem("access_token");
     } else {
       alert("Something went wrong... please try again");
     }
