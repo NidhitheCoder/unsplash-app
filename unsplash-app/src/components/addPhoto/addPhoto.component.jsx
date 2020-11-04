@@ -64,7 +64,7 @@ const AddPhoto = ({ addSingleImage }) => {
   const AddImage = async () => {
     const label = document.getElementById("photoLabel");
     const url = document.getElementById("photoUrl");
-    addSingleImage(label.value, url.value, 112);
+    addSingleImage(label.value,URL.createObjectURL(url.files[0]), 112);
     setOpen(false);
   };
 
@@ -95,15 +95,7 @@ const AddPhoto = ({ addSingleImage }) => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant="caption">Photo URL</Typography>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                type="file"
-                fullWidth
-                required
-                id="photoUrl"
-                placeholder="https://images.unsplash.com/photo-16032866..."
-              />
+                <input type="file" id="photoUrl" name="image" />
             </Grid>
             <Grid item xs={5}></Grid>
             <Grid item xs={2}>

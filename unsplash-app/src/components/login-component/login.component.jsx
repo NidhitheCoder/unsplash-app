@@ -45,11 +45,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const parseToken = (token) => {
+return JSON.parse(atob(token.split('.')[1]));
+}
+
 const Login = props => {
   const { toggleUser, userLogin } = props;
   const classes = useStyles();
   const refresh_token = localStorage.getItem("refresh_token");
+  const accessToken = localStorage.getItem("access_token");
+
   if (refresh_token) {
+    let parsedToken = parseToken(refresh_token);
+    console.log(parsedToken);
+    let currentTimeStamp = Math.floor(Date.now() /1000)
+    console.log(currentTimeStamp);
     loginWithRefreshToken(refresh_token);
     auth.login(() => {
       props.history.push("/home");
