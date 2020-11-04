@@ -134,7 +134,7 @@ const PrimarySearchAppBar = (props) => {
         >
           <AccountCircle />
         </IconButton>
-        <p>{userDetails.username}</p>
+        <p>{userDetails}</p>
       </MenuItem>
       <MenuItem onClick={logout}>Logout</MenuItem>
     </Menu>

@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Copyright } from "../copyright/copyright.component";
 import CustomButton  from '../custom-button/custom-button.component';
+import auth from "../../auth/auth";
 
 import {toggleUserAsync, signUpWithCredentialAsync} from '../../redux/image-collection/image-collection.action';
 
@@ -42,10 +43,14 @@ const useStyles = makeStyles(theme => ({
 const SignUp = (props) => {
   const {toggleUser,userSignUp} = props;
 
-  const signUpWithCredential =() => {
+  const signUpWithCredential = async() => {
     const  userName = document.getElementById('email').value;
     const password = document.getElementById("password").value;
-    userSignUp(userName,password);
+    await userSignUp(userName,password);
+    auth.login(()=>{
+      props.history.push("/home")
+    })
+
   }
   const classes = useStyles();
   return (

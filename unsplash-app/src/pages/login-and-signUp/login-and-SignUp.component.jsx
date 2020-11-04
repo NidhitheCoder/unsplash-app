@@ -7,7 +7,7 @@ import SignUp from "../../components/signUp/signUp.component";
 
 const LoginAndSignUp = props => {
   const { newUser } = props;
-  return <div>{newUser ? <SignUp /> : <Login {...props} />}</div>;
+  return <div>{newUser ? <SignUp {...props} /> : <Login {...props} />}</div>;
 };
 
 const mapStateToProps = state => ({

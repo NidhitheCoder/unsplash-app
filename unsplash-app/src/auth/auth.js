@@ -4,7 +4,7 @@ class Auth {
   }
 
   login(callback) {
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("refresh_token")) {
       this.authenticated = true;
       callback();
     } else {
