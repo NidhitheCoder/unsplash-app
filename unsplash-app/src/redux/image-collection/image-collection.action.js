@@ -126,12 +126,12 @@ export const fetchCollecitonsStartAsync = () => {
          dispatch(fetchImageStart())
         });
 
-    if (response.status === 200) {
+    if (response && response.status === 200) {
       setTimeout(() => {
         dispatch(fetchImagesSuccess(response.data));
       }, 1000);
     } else {
-      alert("Something wrong " + response.statusText);
+      alert("Something wrong... Please try again");
     }
   };
 };
@@ -158,10 +158,10 @@ export const addSingleImageToStoreAsync = (title, url, userId) => {
       .then(res => (response = res))
       .catch(err => console.log("error ",err));
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       dispatch(addSingleImageToStore(response.data));
     } else {
-      alert("Something wrong : "+ response.statusText);
+      alert("Something wrong : " + response);
     }
   };
 };

@@ -47,6 +47,21 @@ const useStyles = makeStyles(theme => ({
   },
   buttonContainer: {
     position: "relative"
+  },
+  submit:{
+    backgroundColor: "#3db46d",
+    width: "10vw",
+    color: "#fff",
+    borderRadius: theme.spacing(3),
+    fontSize: "14px",
+    fontWeight: 700,
+    fontStyle: "normal",
+    lineHeight: "19.07px",
+    minWidth: "100px",
+    height: "55px",
+    "&:hover": {
+      backgroundColor: "#3db46d"
+    },
   }
 }));
 
@@ -64,7 +79,8 @@ const AddPhoto = ({ addSingleImage }) => {
   const AddImage = async () => {
     const label = document.getElementById("photoLabel");
     const url = document.getElementById("photoUrl");
-    addSingleImage(label.value,URL.createObjectURL(url.files[0]), 112);
+    // console.log(URL.createObjectURL(url.files[0]));
+    addSingleImage(label.value,url.value, 112);
     setOpen(false);
   };
 
@@ -97,18 +113,18 @@ const AddPhoto = ({ addSingleImage }) => {
               <Typography variant="caption">Photo URL</Typography>
                 <input type="file" id="photoUrl" name="image" />
             </Grid>
-            <Grid item xs={5}></Grid>
-            <Grid item xs={2}>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={4}>
               <CustomButton
                 caption="cancel"
                 classes={classes.cancel}
                 onclick={handleClose}
               />
             </Grid>
-            <Grid item xs={2} className={classes.buttonContainer}>
+            <Grid item xs={4} className={classes.buttonContainer}>
               <CustomButton
                 caption="Submit"
-                classes={classes.button}
+                classes={classes.submit}
                 variant="contained"
                 onclick={AddImage}
               />
