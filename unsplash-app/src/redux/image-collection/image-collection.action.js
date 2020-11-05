@@ -52,12 +52,12 @@ export const loginWithCredentialsAsync = (userName, password) => {
       .then(res => {
         response = res;
       }).catch(err => console.log("error in login",err));
-    if (response.status === 200) {
+    if (response && response.status === 200) {
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("refresh_token", response.data.refresh_token);
       dispatch(addUserDetailsToStore(userName));
     } else {
-      alert("Something wrong : "+ response.statusText);
+      alert("Something wrong : ");
     }
   };
 };

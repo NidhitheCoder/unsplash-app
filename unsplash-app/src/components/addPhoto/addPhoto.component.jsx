@@ -39,14 +39,18 @@ const useStyles = makeStyles(theme => ({
     borderRadius: theme.spacing(3),
     height: "55px",
     minWidth: "137px",
+    width:"10vw",
     color: "#BDBDBD",
     "@media (max-width:560px)": {
       height: "30px",
-      margin: "0 5vw"
+      margin: "0 5vw",
+      width:"100px"
     }
   },
   buttonContainer: {
-    position: "relative"
+    position: "relative",
+    display:"flex",
+    justifyContent:"end",
   },
   submit:{
     backgroundColor: "#3db46d",
@@ -62,6 +66,12 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       backgroundColor: "#3db46d"
     },
+    "@media (max-width:560px)": {
+      height: "30px",
+      width:"100px",
+      fontSize:"10px",
+      marginRight:"1vw"
+    }
   }
 }));
 
@@ -97,6 +107,7 @@ const AddPhoto = ({ addSingleImage }) => {
           Add a new photo
         </Typography>
         <Box mt={3}>
+        <form noValidate>
           <Grid container>
             <Grid item xs={12}>
               <Typography variant="caption">Label</Typography>
@@ -113,15 +124,13 @@ const AddPhoto = ({ addSingleImage }) => {
               <Typography variant="caption">Photo URL</Typography>
                 <input type="file" id="photoUrl" name="image" />
             </Grid>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={4}>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={10} className={classes.buttonContainer}>
               <CustomButton
                 caption="cancel"
                 classes={classes.cancel}
                 onclick={handleClose}
               />
-            </Grid>
-            <Grid item xs={4} className={classes.buttonContainer}>
               <CustomButton
                 caption="Submit"
                 classes={classes.submit}
@@ -130,7 +139,8 @@ const AddPhoto = ({ addSingleImage }) => {
               />
             </Grid>
           </Grid>
-        </Box>
+          </form>
+          </Box>
       </ModalComponent>
     </div>
   );

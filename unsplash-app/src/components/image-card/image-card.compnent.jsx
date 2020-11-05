@@ -49,6 +49,10 @@ const useStyles = makeStyles(theme => ({
     fontSize: "14px",
     fontWeight: 700,
     height: "55px"
+  },
+  buttonContainer:{
+    display:"flex",
+    justifyContent:"end",
   }
 }));
 
@@ -106,16 +110,14 @@ const ImageCard = ({ data, removeImage }) => {
                   autoComplete="password"
                 />
               </Grid>
-              <Grid item xs={6} />
-              <Grid item xs={3}>
+              <Grid item xs={2} />
+              <Grid item xs={10} className={classes.buttonContainer}>
                 <CustomButton
                   disabled
                   caption="Cancel"
                   classes={classes.cancel}
                   onclick={handleClose}
                 />
-              </Grid>
-              <Grid item xs={3}>
                 <CustomButton
                   variant="contained"
                   classes={classes.cancel}
