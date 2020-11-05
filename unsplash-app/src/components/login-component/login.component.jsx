@@ -45,34 +45,56 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const parseToken = (token) => {
-return JSON.parse(atob(token.split('.')[1]));
-}
-
-const Login = props => {
-  const { toggleUser, userLogin } = props;
-  const classes = useStyles();
+// check token eligibility for enable protected routes without login(login with password).
+const tokenBasedRouting = props => {
   const refresh_token = localStorage.getItem("refresh_token");
   const accessToken = localStorage.getItem("access_token");
 
-  if (refresh_token) {
-    let parsedToken = parseToken(refresh_token);
-    console.log(parsedToken);
-    let currentTimeStamp = Math.floor(Date.now() /1000)
-    console.log(currentTimeStamp);
+  if (eligibleToken(accessToken)) {
+    auth.login(() => {
+      props.history.push("/home");
+    });
+  } else if (eligibleToken(refresh_token)) {
     loginWithRefreshToken(refresh_token);
     auth.login(() => {
       props.history.push("/home");
     });
   }
+};
+
+//  check tokens are existed and its expiry
+const eligibleToken = token => {
+  if (token) {
+    const parsedToken = parseToken(token);
+    const tokenExpiry = parsedToken.exp;
+    let currentTimeStamp = Math.floor(Date.now() / 1000);
+    return tokenExpiry > currentTimeStamp ? true : false;
+  }
+  return false;
+};
+
+// parse token to get expiry
+const parseToken = token => {
+  return JSON.parse(atob(token.split(".")[1]));
+};
+
+const Login = props => {
+  const { toggleUser, userLogin } = props;
+  const classes = useStyles();
+  tokenBasedRouting(props);
 
   const loginWithCredential = async () => {
     const userName = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     await userLogin(userName, password);
-    auth.login(() => {
-      props.history.push("/home");
-    });
+    let newAccessToken = localStorage.getItem("access_token");
+    if (eligibleToken(newAccessToken)) {
+      auth.login(() => {
+        props.history.push("/home");
+      });
+    } else {
+      alert("Unauthorized Action");
+    }
   };
 
   return (

@@ -43,7 +43,6 @@ export const addUserDetailsToStore = user => ({
 export const loginWithCredentialsAsync = (userName, password) => {
   return async dispatch => {
     let response;
-
     await axios
       .get("/login", { email: userName, password: password })
       .then(res => {
@@ -68,11 +67,10 @@ export const loginWithRefreshToken = async refresh_token => {
     .then(res => (response = res.data));
 
   localStorage.setItem("access_token", response.access_token);
-  localStorage.setItem("refresh_token",response.refresh_token)
 };
 
-// user Logout
 
+// user Logout
 export const removeUserFromStore = () => ({
   type: imageCollectionActionTypes.REMOVE_USER
 });
