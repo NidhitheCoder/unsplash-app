@@ -21,6 +21,7 @@ import {
   loginWithRefreshToken
 } from "../../redux/image-collection/image-collection.action";
 import { connect } from "react-redux";
+import {eligibleToken} from '../../auth/token-manipulate';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -46,36 +47,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 // check token eligibility for enable protected routes without login(login with password).
-const tokenBasedRouting = props => {
+const tokenBasedRouting = (props) => {
   const refresh_token = localStorage.getItem("refresh_token");
   const accessToken = localStorage.getItem("access_token");
-
   if (eligibleToken(accessToken)) {
     auth.login(() => {
       props.history.push("/home");
     });
   } else if (eligibleToken(refresh_token)) {
-    loginWithRefreshToken(refresh_token);
+    props.loginWithRefreshToken(refresh_token);
     auth.login(() => {
       props.history.push("/home");
     });
   }
-};
-
-//  check tokens are existed and its expiry
-const eligibleToken = token => {
-  if (token) {
-    const parsedToken = parseToken(token);
-    const tokenExpiry = parsedToken.exp;
-    let currentTimeStamp = Math.floor(Date.now() / 1000);
-    return tokenExpiry > currentTimeStamp ? true : false;
-  }
-  return false;
-};
-
-// parse token to get expiry
-const parseToken = token => {
-  return JSON.parse(atob(token.split(".")[1]));
 };
 
 const Login = props => {
@@ -171,7 +155,8 @@ const Login = props => {
 const mapDispatchToProps = dispatch => ({
   toggleUser: () => dispatch(toggleUserAsync()),
   userLogin: (userName, password) =>
-    dispatch(loginWithCredentialsAsync(userName, password))
+    dispatch(loginWithCredentialsAsync(userName, password)),
+    loginWithRefreshToken:(refresh_token) => dispatch(loginWithRefreshToken(refresh_token))
 });
 
 export default connect(null, mapDispatchToProps)(Login);

@@ -11,6 +11,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import AddPhoto from "../addPhoto/addPhoto.component";
 import Search from "../search/search.component";
 import auth from "../../auth/auth";
+import {parseToken} from '../../auth/token-manipulate';
 import { logoutAsync } from "../../redux/image-collection/image-collection.action";
 import { connect } from "react-redux";
 
@@ -94,7 +95,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PrimarySearchAppBar = (props) => {
-  const  {logoutFunc,userDetails} = props;
+  const  {logoutFunc,userName} = props;
+  let accessToken = localStorage.getItem("access_token");
+  
+  let parsedToken = accessToken ? parseToken(accessToken) : "";
+  let user = userName ? userName : parsedToken.username;
+
   const classes = useStyles();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -138,7 +144,7 @@ const PrimarySearchAppBar = (props) => {
         >
           <AccountCircle />
         </IconButton>
-        <p>{userDetails}</p>
+        <p>{user}</p>
       </MenuItem>
       <MenuItem onClick={logout}>Logout</MenuItem>
     </Menu>
@@ -187,7 +193,7 @@ const PrimarySearchAppBar = (props) => {
 };
 
 const mapStatetoProps = state => ({
-  userDetails :state.imageCollection.user
+  userName :state.imageCollection.user
 })
 
 const mapDispatchToProps =(dispatch) => ({
