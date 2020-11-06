@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: "#3db46d"
     },
     "@media (max-width:560px)": {
-      height: "30px",
+      height: "40px",
       width:"100px",
       fontSize:"10px",
       marginRight:"1vw"
@@ -38,12 +38,13 @@ const useStyles = makeStyles(theme => ({
   cancel: {
     borderRadius: theme.spacing(3),
     height: "55px",
-    minWidth: "137px",
+    minWidth: "100px",
+    margin:"0 8px",
     width:"10vw",
     color: "#BDBDBD",
     "@media (max-width:560px)": {
-      height: "30px",
-      margin: "0 5vw",
+      height: "40px",
+      margin: "3vh 5vw",
       width:"100px"
     }
   },
@@ -67,10 +68,10 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: "#3db46d"
     },
     "@media (max-width:560px)": {
-      height: "30px",
+      height: "40px",
       width:"100px",
       fontSize:"10px",
-      marginRight:"1vw"
+      margin: "3vh 5vw",
     }
   }
 }));

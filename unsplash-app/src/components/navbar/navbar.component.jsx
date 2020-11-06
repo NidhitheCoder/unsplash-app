@@ -43,9 +43,9 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       backgroundColor: fade(theme.palette.common.black, 0.03)
     },
-    height: "30px",
+    height: "40px",
     marginRight: theme.spacing(2),
-    marginLeft: 0,
+    margin:"2vh 0",
     width: "50vw",
     display:"flex",
     justifyContent:"center",
@@ -81,7 +81,8 @@ const useStyles = makeStyles(theme => ({
   sectionDesktop: {
     display: "none",
     [theme.breakpoints.up("md")]: {
-      display: "flex"
+      display: "flex",
+      margin:"0 10px"
     }
   },
   sectionMobile: {
@@ -154,7 +155,7 @@ const PrimarySearchAppBar = (props) => {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color="inherit"
+              color="secondary"
             >
               <AccountCircle />
             </IconButton>

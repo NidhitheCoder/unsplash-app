@@ -36,19 +36,16 @@ const useStyles = makeStyles(theme => ({
     textTransform: "LowerCase",
     lineHeight: "14.63px"
   },
-  cancel: {
+  button: {
     borderRadius: theme.spacing(3),
     height: "55px",
-    minWidth: "137px",
-    color: "#BDBDBD"
-  },
-  button: {
-    backgrounColor: "#EB5757",
-    color: "#fff",
-    borderRadius: theme.spacing(3),
-    fontSize: "14px",
-    fontWeight: 700,
-    height: "55px"
+    width:"120px",
+    margin:"0 8px",
+    minWidth: "100px",
+    color: "#BDBDBD",
+    "@media (max-width:560px)":{
+      height:"40px"
+    }
   },
   buttonContainer:{
     display:"flex",
@@ -115,12 +112,12 @@ const ImageCard = ({ data, removeImage }) => {
                 <CustomButton
                   disabled
                   caption="Cancel"
-                  classes={classes.cancel}
+                  classes={classes.button}
                   onclick={handleClose}
                 />
                 <CustomButton
                   variant="contained"
-                  classes={classes.cancel}
+                  classes={classes.button}
                   color="secondary"
                   caption="Delete"
                   onclick={deleteImage}
