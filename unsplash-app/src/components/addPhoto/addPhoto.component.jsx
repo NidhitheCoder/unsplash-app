@@ -39,14 +39,39 @@ const useStyles = makeStyles(theme => ({
     borderRadius: theme.spacing(3),
     height: "55px",
     minWidth: "137px",
+    width:"10vw",
     color: "#BDBDBD",
     "@media (max-width:560px)": {
       height: "30px",
-      margin: "0 5vw"
+      margin: "0 5vw",
+      width:"100px"
     }
   },
   buttonContainer: {
-    position: "relative"
+    position: "relative",
+    display:"flex",
+    justifyContent:"end",
+  },
+  submit:{
+    backgroundColor: "#3db46d",
+    width: "10vw",
+    color: "#fff",
+    borderRadius: theme.spacing(3),
+    fontSize: "14px",
+    fontWeight: 700,
+    fontStyle: "normal",
+    lineHeight: "19.07px",
+    minWidth: "100px",
+    height: "55px",
+    "&:hover": {
+      backgroundColor: "#3db46d"
+    },
+    "@media (max-width:560px)": {
+      height: "30px",
+      width:"100px",
+      fontSize:"10px",
+      marginRight:"1vw"
+    }
   }
 }));
 
@@ -64,7 +89,8 @@ const AddPhoto = ({ addSingleImage }) => {
   const AddImage = async () => {
     const label = document.getElementById("photoLabel");
     const url = document.getElementById("photoUrl");
-    addSingleImage(label.value, url.value, 112);
+    // console.log(URL.createObjectURL(url.files[0]));
+    addSingleImage(label.value,url.value, 112);
     setOpen(false);
   };
 
@@ -81,6 +107,7 @@ const AddPhoto = ({ addSingleImage }) => {
           Add a new photo
         </Typography>
         <Box mt={3}>
+        <form noValidate>
           <Grid container>
             <Grid item xs={12}>
               <Typography variant="caption">Label</Typography>
@@ -95,34 +122,25 @@ const AddPhoto = ({ addSingleImage }) => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant="caption">Photo URL</Typography>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                type="file"
-                fullWidth
-                required
-                id="photoUrl"
-                placeholder="https://images.unsplash.com/photo-16032866..."
-              />
+                <input type="file" id="photoUrl" name="image" />
             </Grid>
-            <Grid item xs={5}></Grid>
-            <Grid item xs={2}>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={10} className={classes.buttonContainer}>
               <CustomButton
                 caption="cancel"
                 classes={classes.cancel}
                 onclick={handleClose}
               />
-            </Grid>
-            <Grid item xs={2} className={classes.buttonContainer}>
               <CustomButton
                 caption="Submit"
-                classes={classes.button}
+                classes={classes.submit}
                 variant="contained"
                 onclick={AddImage}
               />
             </Grid>
           </Grid>
-        </Box>
+          </form>
+          </Box>
       </ModalComponent>
     </div>
   );

@@ -47,6 +47,9 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "50vw",
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
       width: "25vw",
@@ -104,8 +107,8 @@ const PrimarySearchAppBar = (props) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const logout = () => {
-    logoutFunc();
+  const logout = async() => {
+    await logoutFunc();
     auth.logout(() => {
       props.history.push("/");
     });

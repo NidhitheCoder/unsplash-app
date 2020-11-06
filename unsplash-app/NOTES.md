@@ -164,9 +164,7 @@
   DELETE /posts/1
   ```
 
-
->> referance for Json server Tutorial: http://zetcode.com/javascript/jsonserver/
-
+> > referance for Json server Tutorial: http://zetcode.com/javascript/jsonserver/
 
 # Redux-thunk
 
@@ -174,33 +172,51 @@
 - thunk return a function instead of an object and that gets the dispatch.
 
 - How to install ?
+
 ```
 
     npm install redux-thunk
 
 ```
 
-- If redux-thunk middleware is enabled, any time you attempt to dispatch a function instead of an object the middleware will call that function with dispatch  method itself as the first argument.
+- If redux-thunk middleware is enabled, any time you attempt to dispatch a function instead of an object the middleware will call that function with dispatch method itself as the first argument.
 
 - React -> (user action) -> Action Creator -> Action -> Middleware -> Reducers -> State -> Again React
 
 - Dispatch : Dispatch method is a method apart the the redux store that contain our application state. It makes sure the action get sent to all reducers.
 
- Redux-thunk Referance : https://www.youtube.com/watch?v=1QI-UE3-0PU
+Redux-thunk Referance : https://www.youtube.com/watch?v=1QI-UE3-0PU
 
 referance for dependency error when running our app : https://github.com/creativetimofficial/argon-dashboard-react/issues/28
-
-
 
 # json server auth
 
 - How to use ?
-   - npm init
-   - npm install --save json-server
-   - create db.json
-   - in package.json -> add  "json:server": "json-server --watch db.json"
-   - And run using " npm run json:server "
+
+  - npm init
+  - npm install --save json-server
+  - create db.json
+  - in package.json -> add "json:server": "json-server --watch db.json"
+  - And run using " npm run json:server "
 
 - Referance for fake rest auth api - https://www.youtube.com/watch?v=1zkgdLZEdwM
 
 - Referance for Node js JWT auth - https://www.youtube.com/watch?v=7nafaH9SddU
+
+# How to upload an images using javascript
+
+- Use file type input to access image
+- create new fileReader object using fileReader() method.
+  - new keyword helps to create new object
+    example:
+    ```
+    const reader = new fileReader();
+    ```
+- What is a file reader ?
+  - the fileReader objects lets web applications asyncronously read the contents of files(or row data buffers) stored on the user's computer, using file or blob object to specify the file or date to read.
+
+# Unix timestamp
+- The unix time stamp is a way to track  time as a running total of seconds (count start from JAN 1 1970).
+
+- To get current timestamp
+      `let currentTimeStamp = Math.floor(Date.now() /1000)`

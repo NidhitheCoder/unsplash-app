@@ -18,7 +18,6 @@ export const toggleUserAsync = () => {
 };
 
 // User sign Up
-
 export const signUpWithCredentialAsync = (userName, password) => {
   return async dispatch => {
     let response;
@@ -27,10 +26,15 @@ export const signUpWithCredentialAsync = (userName, password) => {
       .then(res => {
         response = res;
       })
-      .catch(err => alert("Error Hitting : ", err));
-    localStorage.setItem("access_token", response.data.access_token);
-    localStorage.setItem("refresh_token", response.data.refresh_token);
-    dispatch(addUserDetailsToStore(userName));
+      .catch(err => alert(err));
+
+    if (response.status === 200) {
+      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("refresh_token", response.data.refresh_token);
+      dispatch(addUserDetailsToStore(userName));
+    } else {
+      alert("Something wrong "+ response.statusText);
+    }
   };
 };
 
@@ -43,16 +47,18 @@ export const addUserDetailsToStore = user => ({
 export const loginWithCredentialsAsync = (userName, password) => {
   return async dispatch => {
     let response;
-
     await axios
       .get("/login", { email: userName, password: password })
       .then(res => {
-        response = res.data;
-      });
-
-    localStorage.setItem("access_token", response.access_token);
-    localStorage.setItem("refresh_token",response.refresh_token)
-    dispatch(addUserDetailsToStore(userName));
+        response = res;
+      }).catch(err => console.log("error in login",err));
+    if (response && response.status === 200) {
+      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("refresh_token", response.data.refresh_token);
+      dispatch(addUserDetailsToStore(userName));
+    } else {
+      alert("Something wrong : ");
+    }
   };
 };
 
@@ -65,14 +71,17 @@ export const loginWithRefreshToken = async refresh_token => {
         Authorization: refresh_token
       }
     })
-    .then(res => (response = res.data));
+    .then(res => (response = res))
+    .catch(err=> console.log("error",err));
 
-  localStorage.setItem("access_token", response.access_token);
-  localStorage.setItem("refresh_token",response.refresh_token)
+  if (response.status === 200) {
+    localStorage.setItem("access_token", response.data.access_token);
+  } else {
+    alert("Something wrong  : " + response.statusText);
+  }
 };
 
 // user Logout
-
 export const removeUserFromStore = () => ({
   type: imageCollectionActionTypes.REMOVE_USER
 });
@@ -83,11 +92,12 @@ export const logoutAsync = () => {
     await axios.get("/logout", { headers: headers }).then(res => {
       response = res;
     });
+
     if (response.status === 200 && response.data.Authorization === "") {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("access_token");
     } else {
-      alert("Something went wrong... please try again");
+      alert("Something went wrong... please try again " + response.statusText);
     }
   };
 };
@@ -103,16 +113,26 @@ export const fetchImageStart = () => ({
 });
 
 export const fetchCollecitonsStartAsync = () => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(fetchImageStart());
-    axios
+    let response;
+    await axios
       .get("/images", { headers: headers })
-      .then(data =>
-        setTimeout(() => {
-          dispatch(fetchImagesSuccess(data.data));
-        }, 1000)
-      )
-      .catch(() => dispatch(fetchImageStart()));
+      .then(data => {
+        response = data;
+      })
+      .catch((err) =>{
+        console.log("error in fetching images",err)
+         dispatch(fetchImageStart())
+        });
+
+    if (response && response.status === 200) {
+      setTimeout(() => {
+        dispatch(fetchImagesSuccess(response.data));
+      }, 1000);
+    } else {
+      alert("Something wrong... Please try again");
+    }
   };
 };
 
@@ -123,8 +143,9 @@ export const addSingleImageToStore = singleImage => ({
 });
 
 export const addSingleImageToStoreAsync = (title, url, userId) => {
-  return dispatch => {
-    axios
+  return async dispatch => {
+    let response;
+    await axios
       .post(
         `/images`,
         {
@@ -134,7 +155,14 @@ export const addSingleImageToStoreAsync = (title, url, userId) => {
         },
         { headers: headers }
       )
-      .then(res => dispatch(addSingleImageToStore(res.data)));
+      .then(res => (response = res))
+      .catch(err => console.log("error ",err));
+
+    if (response.status === 201) {
+      dispatch(addSingleImageToStore(response.data));
+    } else {
+      alert("Something wrong : " + response);
+    }
   };
 };
 
@@ -145,12 +173,18 @@ export const removeImageFromStore = image => ({
 });
 
 export const removeImageFromStoreAsync = image => {
-  return dispatch => {
-    axios.delete(`/images/${image.id}`, { headers: headers }).then(res => {
-      if (res.request.status === 200) {
-        dispatch(removeImageFromStore(image));
-      }
-    });
+  return async dispatch => {
+    let response;
+    await axios
+      .delete(`/images/${image.id}`, { headers: headers })
+      .then(res => {
+        response = res;
+      });
+    if (response.status === 200) {
+      dispatch(removeImageFromStore(image));
+    } else {
+      alert("Something Wrong : " + response.statusText);
+    }
   };
 };
 

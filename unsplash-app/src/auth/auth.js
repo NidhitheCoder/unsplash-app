@@ -4,12 +4,8 @@ class Auth {
   }
 
   login(callback) {
-    if (localStorage.getItem("access_token")) {
       this.authenticated = true;
       callback();
-    } else {
-      console.log("Unauthorized Action");
-    }
   }
 
   logout(callback) {
