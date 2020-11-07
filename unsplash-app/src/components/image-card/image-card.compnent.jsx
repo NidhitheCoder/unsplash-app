@@ -11,7 +11,10 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 
 import CustomButton from "../custom-button/custom-button.component";
-import { removeImageFromStoreAsync } from "../../redux/image-collection/image-collection.action";
+import {
+  removeImageFromStoreAsync,
+  loginWithCredentialsAsync
+} from "../../redux/image-collection/image-collection.action";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -36,27 +39,29 @@ const useStyles = makeStyles(theme => ({
     textTransform: "LowerCase",
     lineHeight: "14.63px"
   },
-  cancel: {
+  button: {
     borderRadius: theme.spacing(3),
     height: "55px",
-    minWidth: "137px",
-    color: "#BDBDBD"
+    width: "120px",
+    margin: "0 8px",
+    minWidth: "100px",
+    color: "#BDBDBD",
+    "@media (max-width:560px)": {
+      height: "40px"
+    }
   },
-  button: {
-    backgrounColor: "#EB5757",
-    color: "#fff",
-    borderRadius: theme.spacing(3),
-    fontSize: "14px",
-    fontWeight: 700,
-    height: "55px"
-  },
-  buttonContainer:{
-    display:"flex",
-    justifyContent:"end",
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "end"
   }
 }));
 
-const ImageCard = ({ data, removeImage }) => {
+const ImageCard = ({
+  data,
+  removeImage,
+  userName,
+  loginWithUserNameAndPassword
+}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -66,9 +71,15 @@ const ImageCard = ({ data, removeImage }) => {
     setOpen(false);
   };
 
-  const deleteImage = () => {
-    removeImage(data);
-    setOpen(false);
+  const deleteImage = async () => {
+    const password = document.getElementById("password").value;
+    let loginData = await loginWithUserNameAndPassword(userName, password);
+    if (loginData.access_token) {
+      removeImage(data, password, userName);
+      setOpen(false);
+    } else {
+      alert("Wrong password");
+    }
   };
 
   const classes = useStyles();
@@ -115,12 +126,12 @@ const ImageCard = ({ data, removeImage }) => {
                 <CustomButton
                   disabled
                   caption="Cancel"
-                  classes={classes.cancel}
+                  classes={classes.button}
                   onclick={handleClose}
                 />
                 <CustomButton
                   variant="contained"
-                  classes={classes.cancel}
+                  classes={classes.button}
                   color="secondary"
                   caption="Delete"
                   onclick={deleteImage}
@@ -135,7 +146,14 @@ const ImageCard = ({ data, removeImage }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  removeImage: image => dispatch(removeImageFromStoreAsync(image))
+  removeImage: (image, password) =>
+    dispatch(removeImageFromStoreAsync(image, password)),
+  loginWithUserNameAndPassword: (userName, password) =>
+    dispatch(loginWithCredentialsAsync(userName, password))
 });
 
-export default connect(null, mapDispatchToProps)(ImageCard);
+const mapStateToProps = state => ({
+  userName: state.imageCollection.user
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImageCard);

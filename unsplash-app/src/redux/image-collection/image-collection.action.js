@@ -1,5 +1,6 @@
 import imageCollectionActionTypes from "./image-collection.types";
 import axios from "../../axios/axios";
+import { parseToken } from "../../auth/token-manipulate";
 
 const headers = {
   "Content-Type": "application/json",
@@ -33,7 +34,7 @@ export const signUpWithCredentialAsync = (userName, password) => {
       localStorage.setItem("refresh_token", response.data.refresh_token);
       dispatch(addUserDetailsToStore(userName));
     } else {
-      alert("Something wrong "+ response.statusText);
+      alert("Something wrong " + response.statusText);
     }
   };
 };
@@ -44,6 +45,7 @@ export const addUserDetailsToStore = user => ({
   payload: user
 });
 
+// Login with username and password
 export const loginWithCredentialsAsync = (userName, password) => {
   return async dispatch => {
     let response;
@@ -51,34 +53,41 @@ export const loginWithCredentialsAsync = (userName, password) => {
       .get("/login", { email: userName, password: password })
       .then(res => {
         response = res;
-      }).catch(err => console.log("error in login",err));
+      })
+      .catch(err => console.log("error in login", err));
+
     if (response && response.status === 200) {
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("refresh_token", response.data.refresh_token);
-      dispatch(addUserDetailsToStore(userName));
+      let parsedToken = parseToken(response.data.access_token);
+      dispatch(addUserDetailsToStore(parsedToken.username));
     } else {
       alert("Something wrong : ");
     }
+    return response.data;
   };
 };
 
 // Login with refresh token
-export const loginWithRefreshToken = async refresh_token => {
-  let response;
-  await axios
-    .get("/login", {
-      headers: {
-        Authorization: refresh_token
-      }
-    })
-    .then(res => (response = res))
-    .catch(err=> console.log("error",err));
-
-  if (response.status === 200) {
-    localStorage.setItem("access_token", response.data.access_token);
-  } else {
-    alert("Something wrong  : " + response.statusText);
-  }
+export const loginWithRefreshToken = refresh_token => {
+  return async dispatch => {
+    let response;
+    await axios
+      .get("/login", {
+        headers: {
+          Authorization: refresh_token
+        }
+      })
+      .then(res => (response = res))
+      .catch(err => console.log("error", err));
+    if (response.status === 200) {
+      localStorage.setItem("access_token", response.data.access_token);
+      let parsedToken = parseToken(response.data.access_token);
+      dispatch(addUserDetailsToStore(parsedToken.username));
+    } else {
+      alert("Something wrong  : " + response.statusText);
+    }
+  };
 };
 
 // user Logout
@@ -96,6 +105,7 @@ export const logoutAsync = () => {
     if (response.status === 200 && response.data.Authorization === "") {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("access_token");
+      dispatch(removeUserFromStore());
     } else {
       alert("Something went wrong... please try again " + response.statusText);
     }
@@ -121,10 +131,10 @@ export const fetchCollecitonsStartAsync = () => {
       .then(data => {
         response = data;
       })
-      .catch((err) =>{
-        console.log("error in fetching images",err)
-         dispatch(fetchImageStart())
-        });
+      .catch(err => {
+        console.log("error in fetching images", err);
+        dispatch(fetchImageStart());
+      });
 
     if (response && response.status === 200) {
       setTimeout(() => {
@@ -156,7 +166,7 @@ export const addSingleImageToStoreAsync = (title, url, userId) => {
         { headers: headers }
       )
       .then(res => (response = res))
-      .catch(err => console.log("error ",err));
+      .catch(err => console.log("error ", err));
 
     if (response.status === 201) {
       dispatch(addSingleImageToStore(response.data));
@@ -172,7 +182,7 @@ export const removeImageFromStore = image => ({
   payload: image
 });
 
-export const removeImageFromStoreAsync = image => {
+export const removeImageFromStoreAsync = (image, password) => {
   return async dispatch => {
     let response;
     await axios

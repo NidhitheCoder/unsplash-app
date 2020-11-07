@@ -8,7 +8,9 @@ const useStyles = makeStyles(theme => ({
   modal: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    width:"50vw",
+    margin:"0 auto"
   },
   paper: {
     backgroundColor: theme.palette.background.paper,

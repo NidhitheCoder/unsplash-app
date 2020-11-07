@@ -11,6 +11,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import AddPhoto from "../addPhoto/addPhoto.component";
 import Search from "../search/search.component";
 import auth from "../../auth/auth";
+import {parseToken} from '../../auth/token-manipulate';
 import { logoutAsync } from "../../redux/image-collection/image-collection.action";
 import { connect } from "react-redux";
 
@@ -43,9 +44,9 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       backgroundColor: fade(theme.palette.common.black, 0.03)
     },
-    height: "30px",
+    height: "40px",
     marginRight: theme.spacing(2),
-    marginLeft: 0,
+    margin:"2vh 0",
     width: "50vw",
     display:"flex",
     justifyContent:"center",
@@ -81,7 +82,8 @@ const useStyles = makeStyles(theme => ({
   sectionDesktop: {
     display: "none",
     [theme.breakpoints.up("md")]: {
-      display: "flex"
+      display: "flex",
+      margin:"0 10px"
     }
   },
   sectionMobile: {
@@ -93,7 +95,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PrimarySearchAppBar = (props) => {
-  const  {logoutFunc,userDetails} = props;
+  const  {logoutFunc,userName} = props;
+  let accessToken = localStorage.getItem("access_token");
+  
+  let parsedToken = accessToken ? parseToken(accessToken) : "";
+  let user = userName ? userName : parsedToken.username;
+
   const classes = useStyles();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -137,7 +144,7 @@ const PrimarySearchAppBar = (props) => {
         >
           <AccountCircle />
         </IconButton>
-        <p>{userDetails}</p>
+        <p>{user}</p>
       </MenuItem>
       <MenuItem onClick={logout}>Logout</MenuItem>
     </Menu>
@@ -154,7 +161,7 @@ const PrimarySearchAppBar = (props) => {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color="inherit"
+              color="secondary"
             >
               <AccountCircle />
             </IconButton>
@@ -186,7 +193,7 @@ const PrimarySearchAppBar = (props) => {
 };
 
 const mapStatetoProps = state => ({
-  userDetails :state.imageCollection.user
+  userName :state.imageCollection.user
 })
 
 const mapDispatchToProps =(dispatch) => ({

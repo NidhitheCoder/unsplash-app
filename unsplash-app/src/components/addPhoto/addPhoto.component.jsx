@@ -29,30 +29,31 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: "#3db46d"
     },
     "@media (max-width:560px)": {
-      height: "30px",
-      width:"100px",
-      fontSize:"10px",
-      marginRight:"1vw"
+      height: "40px",
+      width: "100px",
+      fontSize: "10px",
+      marginRight: "1vw"
     }
   },
   cancel: {
     borderRadius: theme.spacing(3),
     height: "55px",
-    minWidth: "137px",
-    width:"10vw",
+    minWidth: "100px",
+    margin: "0 8px",
+    width: "10vw",
     color: "#BDBDBD",
     "@media (max-width:560px)": {
-      height: "30px",
-      margin: "0 5vw",
-      width:"100px"
+      height: "40px",
+      margin: "3vh 5vw",
+      width: "100px"
     }
   },
   buttonContainer: {
     position: "relative",
-    display:"flex",
-    justifyContent:"end",
+    display: "flex",
+    justifyContent: "end"
   },
-  submit:{
+  submit: {
     backgroundColor: "#3db46d",
     width: "10vw",
     color: "#fff",
@@ -67,10 +68,10 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: "#3db46d"
     },
     "@media (max-width:560px)": {
-      height: "30px",
-      width:"100px",
-      fontSize:"10px",
-      marginRight:"1vw"
+      height: "40px",
+      width: "100px",
+      fontSize: "10px",
+      margin: "3vh 5vw"
     }
   }
 }));
@@ -87,11 +88,15 @@ const AddPhoto = ({ addSingleImage }) => {
   };
 
   const AddImage = async () => {
-    const label = document.getElementById("photoLabel");
-    const url = document.getElementById("photoUrl");
+    const label = document.getElementById("photoLabel").value;
+    const url = document.getElementById("photoUrl").value;
     // console.log(URL.createObjectURL(url.files[0]));
-    addSingleImage(label.value,url.value, 112);
-    setOpen(false);
+    if (label !== "" && url !== "") {
+      addSingleImage(label, url, 112);
+      setOpen(false);
+    } else {
+      alert("Please fill all the fields..");
+    }
   };
 
   return (
@@ -107,40 +112,40 @@ const AddPhoto = ({ addSingleImage }) => {
           Add a new photo
         </Typography>
         <Box mt={3}>
-        <form noValidate>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="caption">Label</Typography>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                required
-                id="photoLabel"
-                placeholder="Suspendisse elit massa"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="caption">Photo URL</Typography>
+          <form noValidate>
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography variant="caption">Label</Typography>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  required
+                  id="photoLabel"
+                  placeholder="Suspendisse elit massa"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="caption">Photo URL</Typography>
                 <input type="file" id="photoUrl" name="image" />
+              </Grid>
+              <Grid item xs={2}></Grid>
+              <Grid item xs={10} className={classes.buttonContainer}>
+                <CustomButton
+                  caption="cancel"
+                  classes={classes.cancel}
+                  onclick={handleClose}
+                />
+                <CustomButton
+                  caption="Submit"
+                  classes={classes.submit}
+                  variant="contained"
+                  onclick={AddImage}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={2}></Grid>
-            <Grid item xs={10} className={classes.buttonContainer}>
-              <CustomButton
-                caption="cancel"
-                classes={classes.cancel}
-                onclick={handleClose}
-              />
-              <CustomButton
-                caption="Submit"
-                classes={classes.submit}
-                variant="contained"
-                onclick={AddImage}
-              />
-            </Grid>
-          </Grid>
           </form>
-          </Box>
+        </Box>
       </ModalComponent>
     </div>
   );
