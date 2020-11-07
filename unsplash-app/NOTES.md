@@ -226,6 +226,8 @@ referance for dependency error when running our app : https://github.com/creativ
  - Hooks are only  using in funcitonal component
  - Referance : https://stackoverflow.com/questions/56554586/how-to-use-usestyle-to-style-class-component-in-material-ui
 
+
+
  # Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
  - Solution: It is happens becouse of we are call a function after route change in our program.
     eg:-
@@ -250,5 +252,9 @@ referance for dependency error when running our app : https://github.com/creativ
       };
 
     ```
+
+  - Referance : https://medium.com/@selvaganesh93/how-to-clean-up-subscriptions-in-react-components-using-abortcontroller-72335f19b6f7
+
+  - Referance for Uploading image using input in react js : https://www.youtube.com/watch?v=XeiOnkEI7XI
        
  
