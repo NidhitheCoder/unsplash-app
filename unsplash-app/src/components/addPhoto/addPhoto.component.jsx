@@ -73,6 +73,10 @@ const useStyles = makeStyles(theme => ({
       fontSize: "10px",
       margin: "3vh 5vw"
     }
+  },
+  fileUpload:{
+    width:"100%",
+    margin:"10px 0"
   }
 }));
 
@@ -128,8 +132,8 @@ const AddPhoto = ({ addSingleImage }) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="caption">Photo URL</Typography>
-                <input type="file" id="photoUrl" name="image" />
+                <Typography variant="caption" >Photo URL</Typography>
+                <input type="file" id="photoUrl" className={classes.fileUpload} name="image" />
               </Grid>
               <Grid item xs={2}></Grid>
               <Grid item xs={10} className={classes.buttonContainer}>
