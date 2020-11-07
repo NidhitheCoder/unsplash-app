@@ -10,7 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutLinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Copyright } from "../copyright/copyright.component";
 import CustomButton from "../custom-button/custom-button.component";
@@ -21,9 +21,9 @@ import {
   loginWithRefreshToken
 } from "../../redux/image-collection/image-collection.action";
 import { connect } from "react-redux";
-import {eligibleToken} from '../../auth/token-manipulate';
+import { eligibleToken } from "../../auth/token-manipulate";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = theme => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -44,10 +44,10 @@ const useStyles = makeStyles(theme => ({
   link: {
     cursor: "pointer"
   }
-}));
+});
 
 // check token eligibility for enable protected routes without login(login with password).
-const tokenBasedRouting = (props) => {
+const tokenBasedRouting = props => {
   const refresh_token = localStorage.getItem("refresh_token");
   const accessToken = localStorage.getItem("access_token");
   if (eligibleToken(accessToken)) {
@@ -62,101 +62,107 @@ const tokenBasedRouting = (props) => {
   }
 };
 
-const Login = props => {
-  const { toggleUser, userLogin } = props;
-  const classes = useStyles();
-  tokenBasedRouting(props);
+class Login extends React.Component {
+  componentDidMount =() =>{
+    tokenBasedRouting(this.props);
+  }
+  render() {
 
-  const loginWithCredential = async () => {
-    const userName = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    await userLogin(userName, password);
-    let newAccessToken = localStorage.getItem("access_token");
-    if (eligibleToken(newAccessToken)) {
-      auth.login(() => {
-        props.history.push("/home");
-      });
-    } else {
-      alert("Unauthorized Action");
-    }
-  };
+    const { toggleUser, userLogin, classes } = this.props;
+    const loginWithCredential = async () => {
+      const userName = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      await userLogin(userName, password);
+      let newAccessToken = localStorage.getItem("access_token");
+      if (eligibleToken(newAccessToken)) {
+        auth.login(() => {
+          this.props.history.push("/home");
+        });
+      } else {
+        alert("Unauthorized Action");
+      }
+    };
 
-  return (
-    <div>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutLinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              required
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              required
-              id="password"
-              name="password"
-              type="password"
-              label="Password"
-              autoComplete="password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember Me"
-            />
-            <CustomButton
-              variant="contained"
-              color="primary"
-              caption="Sign in"
-              classes={classes.submit}
-              onclick={loginWithCredential}
-            />
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot Password
-                </Link>
+    return (
+      <div>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutLinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                required
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                required
+                id="password"
+                name="password"
+                type="password"
+                label="Password"
+                autoComplete="password"
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember Me"
+              />
+              <CustomButton
+                variant="contained"
+                color="primary"
+                caption="Sign in"
+                classes={classes.submit}
+                onclick={loginWithCredential}
+              />
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot Password
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link
+                    className={classes.link}
+                    variant="body2"
+                    onClick={toggleUser}
+                  >
+                    {"Dont you have an account? Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link
-                  className={classes.link}
-                  variant="body2"
-                  onClick={toggleUser}
-                >
-                  {"Dont you have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
-    </div>
-  );
-};
+            </form>
+          </div>
+          <Box mt={8}>
+            <Copyright />
+          </Box>
+        </Container>
+      </div>
+    );
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   toggleUser: () => dispatch(toggleUserAsync()),
   userLogin: (userName, password) =>
     dispatch(loginWithCredentialsAsync(userName, password)),
-    loginWithRefreshToken:(refresh_token) => dispatch(loginWithRefreshToken(refresh_token))
+  loginWithRefreshToken: refresh_token =>
+    dispatch(loginWithRefreshToken(refresh_token))
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default withStyles(useStyles)(
+  connect(null, mapDispatchToProps)(Login)
+);

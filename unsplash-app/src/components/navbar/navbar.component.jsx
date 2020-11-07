@@ -116,10 +116,10 @@ const PrimarySearchAppBar = (props) => {
 
   const logout = async() => {
     await logoutFunc();
+     handleMobileMenuClose();
     auth.logout(() => {
       props.history.push("/");
     });
-    handleMobileMenuClose();
   };
 
   const menuId = "primary-search-account-menu";

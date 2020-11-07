@@ -220,3 +220,35 @@ referance for dependency error when running our app : https://github.com/creativ
 
 - To get current timestamp
       `let currentTimeStamp = Math.floor(Date.now() /1000)`
+
+# How to use useStyle to style Class Component in Material Ui ?
+ 
+ - Hooks are only  using in funcitonal component
+ - Referance : https://stackoverflow.com/questions/56554586/how-to-use-usestyle-to-style-class-component-in-material-ui
+
+ # Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+ - Solution: It is happens becouse of we are call a function after route change in our program.
+    eg:-
+
+    ```
+
+      const logout = async() => {
+        await logoutFunc();
+        props.history.push("/");
+        handleMobileMenuClose();
+      };
+
+    ```
+
+    *** you can find this issue in a code like above one. now you need to change it like this:-
+
+    ```
+      const logout = async() => {
+        await logoutFunc();
+        handleMobileMenuClose();
+        props.history.push("/");
+      };
+
+    ```
+       
+ 
