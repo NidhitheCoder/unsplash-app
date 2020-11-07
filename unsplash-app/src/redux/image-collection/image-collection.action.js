@@ -61,10 +61,11 @@ export const loginWithCredentialsAsync = (userName, password) => {
       localStorage.setItem("refresh_token", response.data.refresh_token);
       let parsedToken = parseToken(response.data.access_token);
       dispatch(addUserDetailsToStore(parsedToken.username));
+      return response.data;
     } else {
       alert("Something wrong : ");
     }
-    return response.data;
+
   };
 };
 
