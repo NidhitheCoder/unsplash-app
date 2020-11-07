@@ -80,7 +80,7 @@ export const loginWithRefreshToken = refresh_token => {
       })
       .then(res => (response = res))
       .catch(err => console.log("error", err));
-    if (response.status === 200) {
+    if (response && response.status === 200) {
       localStorage.setItem("access_token", response.data.access_token);
       let parsedToken = parseToken(response.data.access_token);
       dispatch(addUserDetailsToStore(parsedToken.username));
@@ -102,7 +102,7 @@ export const logoutAsync = () => {
       response = res;
     });
 
-    if (response.status === 200 && response.data.Authorization === "") {
+    if (response && response.status === 200 && response.data.Authorization === "") {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("access_token");
       dispatch(removeUserFromStore());
@@ -168,7 +168,7 @@ export const addSingleImageToStoreAsync = (title, url, userId) => {
       .then(res => (response = res))
       .catch(err => console.log("error ", err));
 
-    if (response.status === 201) {
+    if ( response && response.status === 201) {
       dispatch(addSingleImageToStore(response.data));
     } else {
       alert("Something wrong : " + response);
@@ -190,7 +190,7 @@ export const removeImageFromStoreAsync = (image, password) => {
       .then(res => {
         response = res;
       });
-    if (response.status === 200) {
+    if (response && response.status === 200) {
       dispatch(removeImageFromStore(image));
     } else {
       alert("Something Wrong : " + response.statusText);
