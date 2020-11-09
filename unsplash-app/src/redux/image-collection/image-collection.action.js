@@ -60,7 +60,7 @@ export const loginWithCredentialsAsync = (userName, password) => {
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("refresh_token", response.data.refresh_token);
       let parsedToken = parseToken(response.data.access_token);
-      dispatch(addUserDetailsToStore(parsedToken.username));
+      dispatch(addUserDetailsToStore(parsedToken));
       return response.data;
     } else {
       alert("Something wrong : ");
@@ -84,7 +84,7 @@ export const loginWithRefreshToken = refresh_token => {
     if (response && response.status === 200) {
       localStorage.setItem("access_token", response.data.access_token);
       let parsedToken = parseToken(response.data.access_token);
-      dispatch(addUserDetailsToStore(parsedToken.username));
+      dispatch(addUserDetailsToStore(parsedToken));
     } else {
       alert("Something wrong  : " + response.statusText);
     }

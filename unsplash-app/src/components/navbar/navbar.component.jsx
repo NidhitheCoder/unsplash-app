@@ -96,10 +96,11 @@ const useStyles = makeStyles(theme => ({
 
 const PrimarySearchAppBar = (props) => {
   const  {logoutFunc,userName} = props;
-  let accessToken = localStorage.getItem("access_token");
-  
+  let accessToken = localStorage.getItem("access_token");  
+
   let parsedToken = accessToken ? parseToken(accessToken) : "";
-  let user = userName ? userName : parsedToken.username;
+  let user = userName ? userName.username : parsedToken.username;
+  let userId = userName ? userName.id : parsedToken.id;
 
   const classes = useStyles();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -184,7 +185,7 @@ const PrimarySearchAppBar = (props) => {
           <div className={classes.search}>
             <Search />
           </div>
-          <AddPhoto />
+          <AddPhoto userId={userId} />
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

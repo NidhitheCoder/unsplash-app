@@ -80,7 +80,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddPhoto = ({ addSingleImage }) => {
+const AddPhoto = ({ addSingleImage,userId}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -98,7 +98,7 @@ const AddPhoto = ({ addSingleImage }) => {
     fd.append('image',url.files[0],url.files[0].name)
     if (label !== "" && url !== "") {
       // addSingleImage(label, fd, 112);
-      addSingleImage(label,url.value,112);
+      addSingleImage(label,url.value,userId);
       setOpen(false);
     } else {
       alert("Please fill all the fields..");
