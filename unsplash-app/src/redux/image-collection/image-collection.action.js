@@ -50,8 +50,9 @@ export const loginWithCredentialsAsync = (userName, password) => {
   return async dispatch => {
     let response;
     await axios
-      .get("/login", { email: userName, password: password })
+      .post("/login")
       .then(res => {
+        console.log("response is :",response)
         response = res;
       })
       .catch(err => console.log("error in login", err));

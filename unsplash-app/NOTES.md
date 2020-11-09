@@ -257,4 +257,14 @@ referance for dependency error when running our app : https://github.com/creativ
 
   - Referance for Uploading image using input in react js : https://www.youtube.com/watch?v=XeiOnkEI7XI
        
+
+ # CORS(Cross Origin Resource Sharing)
+
+ - CORS allowing data from one domain to another.
+
+ - Solution for CORS errors
+    - Enable CORS on server.
+    - Make an http request on the server(Cross origin policy is not applicatble to sever to server communication).
+
+  Referance for CORS understanding: https://www.youtube.com/watch?v=gPzMRoPDrFk
  
