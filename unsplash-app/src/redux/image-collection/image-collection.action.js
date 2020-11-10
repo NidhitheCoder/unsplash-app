@@ -23,7 +23,7 @@ export const signUpWithCredentialAsync = (userName, password) => {
   return async dispatch => {
     let response;
     await axios
-      .get("/signup")
+      .get("/signup",{username:userName,password:password})
       .then(res => {
         response = res;
       })
@@ -50,9 +50,8 @@ export const loginWithCredentialsAsync = (userName, password) => {
   return async dispatch => {
     let response;
     await axios
-      .post("/login")
+      .get("/login")
       .then(res => {
-        console.log("response is :",response)
         response = res;
       })
       .catch(err => console.log("error in login", err));
