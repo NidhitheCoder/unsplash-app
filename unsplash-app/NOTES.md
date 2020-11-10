@@ -267,4 +267,23 @@ referance for dependency error when running our app : https://github.com/creativ
     - Make an http request on the server(Cross origin policy is not applicatble to sever to server communication).
 
   Referance for CORS understanding: https://www.youtube.com/watch?v=gPzMRoPDrFk
+
+  # Env variables
+  - Environmet variables are  variables that are available through a global process .env Object.
+  - Use "REACT_APP" keyword attached with your env variable is helps to access env variable
+     eg:- 
+        if you have an env variable called BASE_URL, you can't directly access env variable,
+        you can use it like:-
+
+        ```
+           REACT_APP_BASE_URL = <'put your url here'>
+
+        ```
+        
+        use this variable:-
+
+        ```
+          const { REACT_APP_BASE_URL } = process.env;
+
+        ```
  

@@ -23,7 +23,7 @@ export const signUpWithCredentialAsync = (userName, password) => {
   return async dispatch => {
     let response;
     await axios
-      .get("/signup",{username:userName,password:password})
+      .get("/signup", { username: userName, password: password })
       .then(res => {
         response = res;
       })
@@ -65,7 +65,6 @@ export const loginWithCredentialsAsync = (userName, password) => {
     } else {
       alert("Something wrong : ");
     }
-
   };
 };
 
@@ -103,7 +102,11 @@ export const logoutAsync = () => {
       response = res;
     });
 
-    if (response && response.status === 200 && response.data.Authorization === "") {
+    if (
+      response &&
+      response.status === 200 &&
+      response.data.Authorization === ""
+    ) {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("access_token");
       dispatch(removeUserFromStore());
@@ -169,7 +172,7 @@ export const addSingleImageToStoreAsync = (title, url, userId) => {
       .then(res => (response = res))
       .catch(err => console.log("error ", err));
 
-    if ( response && response.status === 201) {
+    if (response && response.status === 201) {
       dispatch(addSingleImageToStore(response.data));
     } else {
       alert("Something wrong : " + response);
