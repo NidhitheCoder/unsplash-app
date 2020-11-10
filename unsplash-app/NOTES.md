@@ -220,3 +220,73 @@ referance for dependency error when running our app : https://github.com/creativ
 
 - To get current timestamp
       `let currentTimeStamp = Math.floor(Date.now() /1000)`
+
+# How to use useStyle to style Class Component in Material Ui ?
+ 
+ - Hooks are only  using in funcitonal component
+ - Referance : https://stackoverflow.com/questions/56554586/how-to-use-usestyle-to-style-class-component-in-material-ui
+
+
+
+ # Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+ - Solution: It is happens becouse of we are call a function after route change in our program.
+    eg:-
+
+    ```
+
+      const logout = async() => {
+        await logoutFunc();
+        props.history.push("/");
+        handleMobileMenuClose();
+      };
+
+    ```
+
+    *** you can find this issue in a code like above one. now you need to change it like this:-
+
+    ```
+      const logout = async() => {
+        await logoutFunc();
+        handleMobileMenuClose();
+        props.history.push("/");
+      };
+
+    ```
+
+  - Referance : https://medium.com/@selvaganesh93/how-to-clean-up-subscriptions-in-react-components-using-abortcontroller-72335f19b6f7
+
+  - Referance for Uploading image using input in react js : https://www.youtube.com/watch?v=XeiOnkEI7XI
+       
+
+ # CORS(Cross Origin Resource Sharing)
+
+ - CORS allowing data from one domain to another.
+
+ - Solution for CORS errors
+    - Enable CORS on server.
+    - Make an http request on the server(Cross origin policy is not applicatble to sever to server communication).
+
+  Referance for CORS understanding: https://www.youtube.com/watch?v=gPzMRoPDrFk
+
+  # Env variables
+  - Environmet variables are  variables that are available through a global process .env Object.
+  In other words, An environmental variable is a variable whose value is set  outside the program, typically through funcitonality build into  the operating system or microservice.
+
+  - Use "REACT_APP" keyword attached with your env variable is helps to access env variable
+     eg:- 
+        if you have an env variable called BASE_URL, you can't directly access env variable,
+        you can use it like:-
+
+        ```
+           REACT_APP_BASE_URL = 'put your url here'
+
+        ```
+        
+        use this variable:-
+
+        ```
+          const { REACT_APP_BASE_URL } = process.env;
+
+        ```
+  * Referance for how to set env variables in react :- https://www.youtube.com/watch?v=KJE4LtAxLEw
+ 

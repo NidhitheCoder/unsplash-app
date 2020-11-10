@@ -33,7 +33,12 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor:"#3db46d",
+    color:"#fff",
+      "&:hover" : {
+        backgroundColor:"#3db46d",
+      }
   },
   link:{
     cursor:'pointer'

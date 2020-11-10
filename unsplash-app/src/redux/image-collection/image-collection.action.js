@@ -23,7 +23,7 @@ export const signUpWithCredentialAsync = (userName, password) => {
   return async dispatch => {
     let response;
     await axios
-      .get("/signup")
+      .get("/signup", { username: userName, password: password })
       .then(res => {
         response = res;
       })
@@ -50,7 +50,7 @@ export const loginWithCredentialsAsync = (userName, password) => {
   return async dispatch => {
     let response;
     await axios
-      .get("/login", { email: userName, password: password })
+      .get("/login")
       .then(res => {
         response = res;
       })
@@ -60,11 +60,11 @@ export const loginWithCredentialsAsync = (userName, password) => {
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("refresh_token", response.data.refresh_token);
       let parsedToken = parseToken(response.data.access_token);
-      dispatch(addUserDetailsToStore(parsedToken.username));
+      dispatch(addUserDetailsToStore(parsedToken));
+      return response.data;
     } else {
       alert("Something wrong : ");
     }
-    return response.data;
   };
 };
 
@@ -80,10 +80,10 @@ export const loginWithRefreshToken = refresh_token => {
       })
       .then(res => (response = res))
       .catch(err => console.log("error", err));
-    if (response.status === 200) {
+    if (response && response.status === 200) {
       localStorage.setItem("access_token", response.data.access_token);
       let parsedToken = parseToken(response.data.access_token);
-      dispatch(addUserDetailsToStore(parsedToken.username));
+      dispatch(addUserDetailsToStore(parsedToken));
     } else {
       alert("Something wrong  : " + response.statusText);
     }
@@ -102,7 +102,11 @@ export const logoutAsync = () => {
       response = res;
     });
 
-    if (response.status === 200 && response.data.Authorization === "") {
+    if (
+      response &&
+      response.status === 200 &&
+      response.data.Authorization === ""
+    ) {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("access_token");
       dispatch(removeUserFromStore());
@@ -168,7 +172,7 @@ export const addSingleImageToStoreAsync = (title, url, userId) => {
       .then(res => (response = res))
       .catch(err => console.log("error ", err));
 
-    if (response.status === 201) {
+    if (response && response.status === 201) {
       dispatch(addSingleImageToStore(response.data));
     } else {
       alert("Something wrong : " + response);
@@ -190,7 +194,7 @@ export const removeImageFromStoreAsync = (image, password) => {
       .then(res => {
         response = res;
       });
-    if (response.status === 200) {
+    if (response && response.status === 200) {
       dispatch(removeImageFromStore(image));
     } else {
       alert("Something Wrong : " + response.statusText);
