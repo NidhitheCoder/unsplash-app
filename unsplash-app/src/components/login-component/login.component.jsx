@@ -39,7 +39,12 @@ const useStyles = theme => ({
     marginTop: theme.spacing(1)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor:"#3db46d",
+    color:"#fff",
+      "&:hover" : {
+        backgroundColor:"#3db46d",
+      }
   },
   link: {
     cursor: "pointer"
@@ -118,12 +123,11 @@ class Login extends React.Component {
                 autoComplete="password"
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox value="remember" color="secondary" />}
                 label="Remember Me"
               />
               <CustomButton
                 variant="contained"
-                color="primary"
                 caption="Sign in"
                 classes={classes.submit}
                 onclick={loginWithCredential}

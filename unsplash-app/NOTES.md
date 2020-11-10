@@ -271,14 +271,14 @@ referance for dependency error when running our app : https://github.com/creativ
   # Env variables
   - Environmet variables are  variables that are available through a global process .env Object.
   In other words, An environmental variable is a variable whose value is set  outside the program, typically through funcitonality build into  the operating system or microservice.
-  
+
   - Use "REACT_APP" keyword attached with your env variable is helps to access env variable
      eg:- 
         if you have an env variable called BASE_URL, you can't directly access env variable,
         you can use it like:-
 
         ```
-           REACT_APP_BASE_URL = <'put your url here'>
+           REACT_APP_BASE_URL = 'put your url here'
 
         ```
         
@@ -288,4 +288,5 @@ referance for dependency error when running our app : https://github.com/creativ
           const { REACT_APP_BASE_URL } = process.env;
 
         ```
+  * Referance for how to set env variables in react :- https://www.youtube.com/watch?v=KJE4LtAxLEw
  
