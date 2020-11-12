@@ -89,9 +89,9 @@ const ImageCard = ({
         <div className="background-shade" />
         <CardMedia
           component="img"
-          alt={data.title}
-          image={data.imgUrl}
-          title={data.title}
+          alt={data.label}
+          image={data.name}
+          title={data.label}
         />
         <CustomButton
           variant="outlined"
@@ -99,7 +99,7 @@ const ImageCard = ({
           classes={classes.delete}
           onclick={handleOpen}
         />
-        <h3> {data.title}</h3>
+        <h3> {data.label}</h3>
       </Card>
       <ModalComponent open={open} handleClose={handleClose}>
         <Typography component="h1" variant="h5">

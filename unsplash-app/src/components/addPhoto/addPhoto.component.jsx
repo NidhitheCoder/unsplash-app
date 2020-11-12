@@ -95,10 +95,13 @@ const AddPhoto = ({ addSingleImage,userId}) => {
     const label = document.getElementById("photoLabel").value;
     const url = document.getElementById("photoUrl");
     const fd = new FormData();
-    fd.append('image',url.files[0],url.files[0].name)
+    console.log("url:",url.files[0])
+    console.log("fd",userId);
+    fd.append('newFile',url.files[0],url.files[0].name);
     if (label !== "" && url !== "") {
-      // addSingleImage(label, fd, 112);
-      addSingleImage(label,url.value,userId);
+      console.log(fd)
+      addSingleImage(label, fd, userId);
+      // addSingleImage(label,url.value,userId);
       setOpen(false);
     } else {
       alert("Please fill all the fields..");
