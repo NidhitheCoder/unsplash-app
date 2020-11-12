@@ -66,6 +66,7 @@ export const loginWithCredentialsAsync = (userName, password) => {
       localStorage.setItem("refresh_token", response.data.refresh_token);
       let parsedToken = parseToken(response.data.access_token);
       dispatch(addUserDetailsToStore(parsedToken));
+      console.log(response);
       return response.data;
     } else {
       alert("Something wrong : ");
@@ -176,9 +177,9 @@ export const addSingleImageToStoreAsync = (title, url, userId) => {
       .post(
         `/api/images`,
         {
-          userID: userId,
+          user_id: userId,
           label: title,
-          name: url
+          file: url
         },
         { headers: makeHeader(localStorage.getItem("access_token")) }
       )
@@ -203,7 +204,7 @@ export const removeImageFromStoreAsync = (image, password) => {
   return async dispatch => {
     let response;
     await axios
-      .delete(`/images/${image.id}`, {
+      .delete(`/api/images/${image.id}`, {
         headers: makeHeader(localStorage.getItem("access_token"))
       })
       .then(res => {
