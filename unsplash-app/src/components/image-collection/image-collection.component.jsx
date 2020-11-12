@@ -6,13 +6,13 @@ import ImageCard from "../image-card/image-card.compnent";
 import { fetchCollecitonsStartAsync } from "../../redux/image-collection/image-collection.action";
 import { LoadingSpinner } from "../loading-spinner/loading-spinner.component";
 import { eligibleToken } from "../../auth/token-manipulate";
-import NoImageMessage from '../no-image/noImage.component';
+import NoImageMessage from "../no-image/noImage.component";
 
 class ImageCollection extends React.Component {
   componentDidMount() {
     const { fetchCollecitonsStartAsync } = this.props;
-    if(eligibleToken(localStorage.getItem("access_token"))) {
-    fetchCollecitonsStartAsync();
+    if (eligibleToken(localStorage.getItem("access_token"))) {
+      fetchCollecitonsStartAsync();
     } else {
       this.props.history.push("/");
       localStorage.removeItem("access_token");
@@ -30,12 +30,14 @@ class ImageCollection extends React.Component {
       return image.label.toLowerCase().includes(keyword.toLowerCase());
     });
     return (
-      <div className="image-collection">
+      <div>
         {fetchComplete ? (
           filteredArray.length > 0 ? (
-            filteredArray.map(data => <ImageCard data={data} key={data.id} />)
+            <div className="image-collection">
+              {filteredArray.map(data => <ImageCard data={data} key={data.id} />)}
+            </div>
           ) : (
-            <noImageMessage />
+            <NoImageMessage />
           )
         ) : (
           <LoadingSpinner />
