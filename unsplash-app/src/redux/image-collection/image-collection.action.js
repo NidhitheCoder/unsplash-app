@@ -76,24 +76,28 @@ export const loginWithCredentialsAsync = (userName, password) => {
 export const loginWithRefreshToken = refresh_token => {
   return async dispatch => {
     let response;
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Refresh ${refresh_token}`
+    };
     await axios
-      .post("/login", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Refresh ${refresh_token}`
+      .post(
+        "/login",
+        {},
+        {
+          headers: headers
         }
-      })
+      )
       .then(res => {
         response = res;
       })
       .catch(err => alert("error inside refreshtoken login" + err));
+
     if (response && response.status === 200) {
       localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("refresh_token", response.data.refresh_token);
       let parsedToken = parseToken(response.data.access_token);
       dispatch(addUserDetailsToStore(parsedToken));
-    } else {
-      alert("Something wrong  : ");
+      return response;
     }
   };
 };
@@ -168,7 +172,7 @@ export const addSingleImageToStore = singleImage => ({
   payload: singleImage
 });
 
-export const addSingleImageToStoreAsync = (title, url, userId) => {
+export const addSingleImageToStoreAsync = (title, file, userId) => {
   return async dispatch => {
     let response;
     await axios
@@ -177,7 +181,7 @@ export const addSingleImageToStoreAsync = (title, url, userId) => {
         {
           user_id: userId,
           label: title,
-          file: url
+          file: file
         },
         { headers: makeHeader(localStorage.getItem("access_token")) }
       )

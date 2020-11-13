@@ -97,13 +97,12 @@ const AddPhoto = ({ addSingleImage, userId }) => {
     const fd = new FormData();
     const file = url.files[0];
     fd.append("file", file);
-    const options = {
-      data: { file: fd }
-    };
+    // const options = {
+    //   data: { file: fd }
+    // };
 
     if (label !== "" && url !== "") {
-      addSingleImage(label, options, userId);
-      // addSingleImage(label,url.value,userId);
+      addSingleImage(label, fd, userId);
       setOpen(false);
     } else {
       alert("Please fill all the fields..");

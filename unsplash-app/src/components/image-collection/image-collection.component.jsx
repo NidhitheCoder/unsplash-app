@@ -12,14 +12,15 @@ import { eligibleToken } from "../../auth/token-manipulate";
 import NoImageMessage from "../no-image/noImage.component";
 
 class ImageCollection extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
     const { fetchCollecitonsStartAsync, loginWithRefreshToken } = this.props;
     const access_token = localStorage.getItem("access_token");
     const refresh_token = localStorage.getItem("refresh_token");
     if (eligibleToken(access_token)) {
       fetchCollecitonsStartAsync();
     } else if (eligibleToken(refresh_token)) {
-      loginWithRefreshToken(refresh_token);
+      let loginData = await loginWithRefreshToken(refresh_token);
+      loginData && loginData.status && fetchCollecitonsStartAsync();
     } else {
       this.props.history.push("/");
       localStorage.removeItem("access_token");
@@ -58,7 +59,7 @@ class ImageCollection extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   fetchCollecitonsStartAsync: () => dispatch(fetchCollecitonsStartAsync()),
-  loginWithRefreshToken: () => dispatch(loginWithRefreshToken())
+  loginWithRefreshToken: token => dispatch(loginWithRefreshToken(token))
 });
 
 const mapStateToProps = state => ({
