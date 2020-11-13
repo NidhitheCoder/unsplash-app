@@ -73,12 +73,13 @@ const ImageCard = ({
 
   const deleteImage = async () => {
     const password = document.getElementById("password").value;
-    let loginData = await loginWithUserNameAndPassword(userName, password);
-    if (loginData.access_token) {
+    let loginData = await loginWithUserNameAndPassword(
+      userName.username,
+      password
+    );
+    if (loginData && loginData.access_token) {
       removeImage(data, password, userName);
       setOpen(false);
-    } else {
-      alert("Wrong password");
     }
   };
 
@@ -89,9 +90,9 @@ const ImageCard = ({
         <div className="background-shade" />
         <CardMedia
           component="img"
-          alt={data.title}
-          image={data.imgUrl}
-          title={data.title}
+          alt={data.label}
+          image={data.name}
+          title={data.label}
         />
         <CustomButton
           variant="outlined"
@@ -99,7 +100,7 @@ const ImageCard = ({
           classes={classes.delete}
           onclick={handleOpen}
         />
-        <h3> {data.title}</h3>
+        <h3> {data.label}</h3>
       </Card>
       <ModalComponent open={open} handleClose={handleClose}>
         <Typography component="h1" variant="h5">

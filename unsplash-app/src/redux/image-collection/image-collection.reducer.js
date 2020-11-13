@@ -6,28 +6,27 @@ const INITIAL_STATE = {
   searchWord: "",
   fetchComplete: "",
   newUser: false,
-  user:""
+  user: ""
 };
 
 const imageCollectionReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-
     case imageCollectionActionTypes.ADD_USER:
-      return{
+      return {
         ...state,
-        user:action.payload
-      }
+        user: action.payload
+      };
 
-      case imageCollectionActionTypes.REMOVE_USER:
-        return{
-          ...state,
-          user:""
-        };
+    case imageCollectionActionTypes.REMOVE_USER:
+      return {
+        ...state,
+        user: ""
+      };
 
     case imageCollectionActionTypes.TOGGLE_USER_TYPE:
       return {
         ...state,
-        newUser: !state.newUser
+        newUser: action.payload
       };
 
     case imageCollectionActionTypes.FETCH_IMAGES_START:

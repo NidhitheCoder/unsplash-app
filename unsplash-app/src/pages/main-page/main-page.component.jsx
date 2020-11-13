@@ -9,7 +9,7 @@ class MainPage extends React.Component {
     return (
       <div className="main-page-container">
         <Navbar {...this.props}/>
-        <ImageCollection />
+        <ImageCollection {...this.props} />
         <div className="footer">
         <Copyright />
         </div>

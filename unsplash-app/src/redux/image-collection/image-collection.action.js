@@ -2,19 +2,22 @@ import imageCollectionActionTypes from "./image-collection.types";
 import axios from "../../axios/axios";
 import { parseToken } from "../../auth/token-manipulate";
 
-const headers = {
-  "Content-Type": "application/json",
-  Authorization: localStorage.getItem("access_token")
+const makeHeader = token => {
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`
+  };
 };
 
 //toggleUsers helps to toggle login and signup page in a single route
-export const toggleUser = () => ({
-  type: imageCollectionActionTypes.TOGGLE_USER_TYPE
+export const toggleUser = value => ({
+  type: imageCollectionActionTypes.TOGGLE_USER_TYPE,
+  payload: value
 });
 
-export const toggleUserAsync = () => {
+export const toggleUserAsync = value => {
   return dispatch => {
-    dispatch(toggleUser());
+    dispatch(toggleUser(value));
   };
 };
 
@@ -23,19 +26,20 @@ export const signUpWithCredentialAsync = (userName, password) => {
   return async dispatch => {
     let response;
     await axios
-      .get("/signup", { username: userName, password: password })
+      .post("/signup", { username: userName, password: password })
       .then(res => {
         response = res;
+
+        if (response.status === 200) {
+          localStorage.setItem("access_token", response.data.access_token);
+          localStorage.setItem("refresh_token", response.data.refresh_token);
+          const parsedToken = parseToken(response.data.access_token);
+          dispatch(addUserDetailsToStore(parsedToken));
+        } else {
+          alert("Something wrong " + response.statusText);
+        }
       })
       .catch(err => alert(err));
-
-    if (response.status === 200) {
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("refresh_token", response.data.refresh_token);
-      dispatch(addUserDetailsToStore(userName));
-    } else {
-      alert("Something wrong " + response.statusText);
-    }
   };
 };
 
@@ -50,21 +54,21 @@ export const loginWithCredentialsAsync = (userName, password) => {
   return async dispatch => {
     let response;
     await axios
-      .get("/login")
+      .post("/login", {
+        username: userName,
+        password: password
+      })
       .then(res => {
         response = res;
+        if (response && response.status === 200) {
+          localStorage.setItem("access_token", response.data.access_token);
+          localStorage.setItem("refresh_token", response.data.refresh_token);
+          let parsedToken = parseToken(response.data.access_token);
+          dispatch(addUserDetailsToStore(parsedToken));
+          return response.data;
+        }
       })
-      .catch(err => console.log("error in login", err));
-
-    if (response && response.status === 200) {
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("refresh_token", response.data.refresh_token);
-      let parsedToken = parseToken(response.data.access_token);
-      dispatch(addUserDetailsToStore(parsedToken));
-      return response.data;
-    } else {
-      alert("Something wrong : ");
-    }
+      .catch(err => alert("Unauthorized action... Please try again "));
   };
 };
 
@@ -72,20 +76,28 @@ export const loginWithCredentialsAsync = (userName, password) => {
 export const loginWithRefreshToken = refresh_token => {
   return async dispatch => {
     let response;
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Refresh ${refresh_token}`
+    };
     await axios
-      .get("/login", {
-        headers: {
-          Authorization: refresh_token
+      .post(
+        "/login",
+        {},
+        {
+          headers: headers
         }
+      )
+      .then(res => {
+        response = res;
       })
-      .then(res => (response = res))
-      .catch(err => console.log("error", err));
+      .catch(err => alert("error inside refreshtoken login" + err));
+
     if (response && response.status === 200) {
       localStorage.setItem("access_token", response.data.access_token);
       let parsedToken = parseToken(response.data.access_token);
       dispatch(addUserDetailsToStore(parsedToken));
-    } else {
-      alert("Something wrong  : " + response.statusText);
+      return response;
     }
   };
 };
@@ -98,15 +110,15 @@ export const removeUserFromStore = () => ({
 export const logoutAsync = () => {
   return async dispatch => {
     let response;
-    await axios.get("/logout", { headers: headers }).then(res => {
-      response = res;
-    });
+    await axios
+      .get("/api/logout", {
+        headers: makeHeader(localStorage.getItem("access_token"))
+      })
+      .then(res => {
+        response = res;
+      });
 
-    if (
-      response &&
-      response.status === 200 &&
-      response.data.Authorization === ""
-    ) {
+    if (response && response.status === 200 && response.data.error === "") {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("access_token");
       dispatch(removeUserFromStore());
@@ -131,12 +143,14 @@ export const fetchCollecitonsStartAsync = () => {
     dispatch(fetchImageStart());
     let response;
     await axios
-      .get("/images", { headers: headers })
+      .get("/api/images", {
+        headers: makeHeader(localStorage.getItem("access_token"))
+      })
       .then(data => {
         response = data;
       })
       .catch(err => {
-        console.log("error in fetching images", err);
+        alert("error in fetching images", err);
         dispatch(fetchImageStart());
       });
 
@@ -144,6 +158,8 @@ export const fetchCollecitonsStartAsync = () => {
       setTimeout(() => {
         dispatch(fetchImagesSuccess(response.data));
       }, 1000);
+      let parsedToken = parseToken(localStorage.getItem("access_token"));
+      dispatch(addUserDetailsToStore(parsedToken));
     } else {
       alert("Something wrong... Please try again");
     }
@@ -156,21 +172,21 @@ export const addSingleImageToStore = singleImage => ({
   payload: singleImage
 });
 
-export const addSingleImageToStoreAsync = (title, url, userId) => {
+export const addSingleImageToStoreAsync = (title, file, userId) => {
   return async dispatch => {
     let response;
     await axios
       .post(
-        `/images`,
+        `/api/images`,
         {
-          userID: userId,
-          title: title,
-          imgUrl: url
+          user_id: userId,
+          label: title,
+          file: file
         },
-        { headers: headers }
+        { headers: makeHeader(localStorage.getItem("access_token")) }
       )
       .then(res => (response = res))
-      .catch(err => console.log("error ", err));
+      .catch(err => alert("error " + err));
 
     if (response && response.status === 201) {
       dispatch(addSingleImageToStore(response.data));
@@ -190,7 +206,9 @@ export const removeImageFromStoreAsync = (image, password) => {
   return async dispatch => {
     let response;
     await axios
-      .delete(`/images/${image.id}`, { headers: headers })
+      .delete(`/api/images/${image.id}`, {
+        headers: makeHeader(localStorage.getItem("access_token"))
+      })
       .then(res => {
         response = res;
       });

@@ -12,10 +12,13 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Copyright } from "../copyright/copyright.component";
-import CustomButton  from '../custom-button/custom-button.component';
+import CustomButton from "../custom-button/custom-button.component";
 import auth from "../../auth/auth";
 
-import {toggleUserAsync, signUpWithCredentialAsync} from '../../redux/image-collection/image-collection.action';
+import {
+  toggleUserAsync,
+  signUpWithCredentialAsync
+} from "../../redux/image-collection/image-collection.action";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -34,29 +37,28 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    backgroundColor:"#3db46d",
-    color:"#fff",
-      "&:hover" : {
-        backgroundColor:"#3db46d",
-      }
+    backgroundColor: "#3db46d",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#3db46d"
+    }
   },
-  link:{
-    cursor:'pointer'
+  link: {
+    cursor: "pointer"
   }
 }));
 
-const SignUp = (props) => {
-  const {toggleUser,userSignUp} = props;
+const SignUp = props => {
+  const { toggleUser, userSignUp } = props;
 
-  const signUpWithCredential = async() => {
-    const  userName = document.getElementById('email').value;
+  const signUpWithCredential = async () => {
+    const userName = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    await userSignUp(userName,password);
-    auth.login(()=>{
-      props.history.push("/home")
-    })
-
-  }
+    await userSignUp(userName, password);
+    auth.login(() => {
+      props.history.push("/home");
+    });
+  };
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
@@ -131,7 +133,11 @@ const SignUp = (props) => {
           />
           <Grid container justify="flex-end">
             <Grid item margin={4}>
-              <Link className={classes.link} variant="body2" onClick={toggleUser}>
+              <Link
+                className={classes.link}
+                variant="body2"
+                onClick={toggleUser}
+              >
                 Already have an account ? Sign in
               </Link>
             </Grid>
@@ -145,9 +151,10 @@ const SignUp = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-toggleUser:() => dispatch(toggleUserAsync()),
-userSignUp:(userName,password) => dispatch(signUpWithCredentialAsync(userName,password))
+const mapDispatchToProps = dispatch => ({
+  toggleUser: () => dispatch(toggleUserAsync(false)),
+  userSignUp: (userName, password) =>
+    dispatch(signUpWithCredentialAsync(userName, password))
 });
 
-export default connect(null,mapDispatchToProps)(SignUp);
+export default connect(null, mapDispatchToProps)(SignUp);
