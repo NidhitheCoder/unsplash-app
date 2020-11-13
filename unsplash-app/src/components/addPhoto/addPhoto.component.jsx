@@ -74,13 +74,13 @@ const useStyles = makeStyles(theme => ({
       margin: "3vh 5vw"
     }
   },
-  fileUpload:{
-    width:"100%",
-    margin:"10px 0"
+  fileUpload: {
+    width: "100%",
+    margin: "10px 0"
   }
 }));
 
-const AddPhoto = ({ addSingleImage,userId}) => {
+const AddPhoto = ({ addSingleImage, userId }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -95,12 +95,14 @@ const AddPhoto = ({ addSingleImage,userId}) => {
     const label = document.getElementById("photoLabel").value;
     const url = document.getElementById("photoUrl");
     const fd = new FormData();
-    console.log("url:",url.files[0])
-    console.log("fd",userId);
-    fd.append('newFile',url.files[0],url.files[0].name);
+    const file = url.files[0];
+    fd.append("file", file);
+    const options = {
+      data: { file: fd }
+    };
+
     if (label !== "" && url !== "") {
-      console.log(fd)
-      addSingleImage(label, fd, userId);
+      addSingleImage(label, options, userId);
       // addSingleImage(label,url.value,userId);
       setOpen(false);
     } else {
@@ -135,8 +137,13 @@ const AddPhoto = ({ addSingleImage,userId}) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="caption" >Photo URL</Typography>
-                <input type="file" id="photoUrl" className={classes.fileUpload} name="image" />
+                <Typography variant="caption">Photo URL</Typography>
+                <input
+                  type="file"
+                  id="photoUrl"
+                  className={classes.fileUpload}
+                  name="image"
+                />
               </Grid>
               <Grid item xs={2}></Grid>
               <Grid item xs={10} className={classes.buttonContainer}>

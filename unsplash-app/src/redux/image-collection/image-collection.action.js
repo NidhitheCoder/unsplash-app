@@ -28,16 +28,17 @@ export const signUpWithCredentialAsync = (userName, password) => {
       .post("/signup", { username: userName, password: password })
       .then(res => {
         response = res;
+
+        if (response.status === 200) {
+          localStorage.setItem("access_token", response.data.access_token);
+          localStorage.setItem("refresh_token", response.data.refresh_token);
+          const parsedToken = parseToken(response.data.access_token);
+          dispatch(addUserDetailsToStore(parsedToken));
+        } else {
+          alert("Something wrong " + response.statusText);
+        }
       })
       .catch(err => alert(err));
-
-    if (response.status === 200) {
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("refresh_token", response.data.refresh_token);
-      dispatch(addUserDetailsToStore(userName));
-    } else {
-      alert("Something wrong " + response.statusText);
-    }
   };
 };
 
@@ -58,19 +59,15 @@ export const loginWithCredentialsAsync = (userName, password) => {
       })
       .then(res => {
         response = res;
+        if (response && response.status === 200) {
+          localStorage.setItem("access_token", response.data.access_token);
+          localStorage.setItem("refresh_token", response.data.refresh_token);
+          let parsedToken = parseToken(response.data.access_token);
+          dispatch(addUserDetailsToStore(parsedToken));
+          return response.data;
+        }
       })
-      .catch(err => alert("error in login" + err));
-
-    if (response && response.status === 200) {
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("refresh_token", response.data.refresh_token);
-      let parsedToken = parseToken(response.data.access_token);
-      dispatch(addUserDetailsToStore(parsedToken));
-      console.log(response);
-      return response.data;
-    } else {
-      alert("Something wrong : ");
-    }
+      .catch(err => alert("Unauthorized action... Please try again "));
   };
 };
 
@@ -79,7 +76,7 @@ export const loginWithRefreshToken = refresh_token => {
   return async dispatch => {
     let response;
     await axios
-      .get("/login", {
+      .post("/login", {
         headers: {
           Authorization: `Bearer ${refresh_token}`
         }
@@ -87,9 +84,10 @@ export const loginWithRefreshToken = refresh_token => {
       .then(res => {
         response = res;
       })
-      .catch(err => alert("error" + err));
+      .catch(err => alert("error inside refreshtoken login" + err));
     if (response && response.status === 200) {
       localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("refresh_token", response.data.refresh_token);
       let parsedToken = parseToken(response.data.access_token);
       dispatch(addUserDetailsToStore(parsedToken));
     } else {
@@ -114,11 +112,7 @@ export const logoutAsync = () => {
         response = res;
       });
 
-    if (
-      response &&
-      response.status === 200 &&
-      response.data.error === ""
-    ) {
+    if (response && response.status === 200 && response.data.error === "") {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("access_token");
       dispatch(removeUserFromStore());
@@ -158,6 +152,8 @@ export const fetchCollecitonsStartAsync = () => {
       setTimeout(() => {
         dispatch(fetchImagesSuccess(response.data));
       }, 1000);
+      let parsedToken = parseToken(localStorage.getItem("access_token"));
+      dispatch(addUserDetailsToStore(parsedToken));
     } else {
       alert("Something wrong... Please try again");
     }
@@ -184,7 +180,7 @@ export const addSingleImageToStoreAsync = (title, url, userId) => {
         { headers: makeHeader(localStorage.getItem("access_token")) }
       )
       .then(res => (response = res))
-      .catch(err => alert("error "+ err));
+      .catch(err => alert("error " + err));
 
     if (response && response.status === 201) {
       dispatch(addSingleImageToStore(response.data));
