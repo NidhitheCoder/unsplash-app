@@ -11,8 +11,11 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import AddPhoto from "../addPhoto/addPhoto.component";
 import Search from "../search/search.component";
 import auth from "../../auth/auth";
-import {parseToken} from '../../auth/token-manipulate';
-import { logoutAsync } from "../../redux/image-collection/image-collection.action";
+import { parseToken } from "../../auth/token-manipulate";
+import {
+  logoutAsync,
+  toggleUserAsync
+} from "../../redux/image-collection/image-collection.action";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
@@ -38,23 +41,23 @@ const useStyles = makeStyles(theme => ({
   search: {
     position: "relative",
     borderRadius: theme.spacing(3),
-    color:"#bdbdbd",
+    color: "#bdbdbd",
     backgroundColor: fade(theme.palette.common.white, 0.15),
-    border:"1px solid rgba(0,0,0,0.25)",
+    border: "1px solid rgba(0,0,0,0.25)",
     "&:hover": {
       backgroundColor: fade(theme.palette.common.black, 0.03)
     },
     height: "40px",
     marginRight: theme.spacing(2),
-    margin:"2vh 0",
+    margin: "2vh 0",
     width: "50vw",
-    display:"flex",
-    justifyContent:"center",
-    alignItems:"center",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
       width: "25vw",
-      height:"55px"
+      height: "55px"
     }
   },
   searchIcon: {
@@ -83,7 +86,7 @@ const useStyles = makeStyles(theme => ({
     display: "none",
     [theme.breakpoints.up("md")]: {
       display: "flex",
-      margin:"0 10px"
+      margin: "0 10px"
     }
   },
   sectionMobile: {
@@ -94,9 +97,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const PrimarySearchAppBar = (props) => {
-  const  {logoutFunc,userName} = props;
-  let accessToken = localStorage.getItem("access_token");  
+const PrimarySearchAppBar = props => {
+  const { logoutFunc, userName, toggleNewUser } = props;
+  let accessToken = localStorage.getItem("access_token");
 
   let parsedToken = accessToken ? parseToken(accessToken) : "";
   let user = userName ? userName.username : parsedToken.username;
@@ -110,15 +113,15 @@ const PrimarySearchAppBar = (props) => {
     setMobileMoreAnchorEl(null);
   };
 
-
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const logout = async() => {
+  const logout = async () => {
     await logoutFunc();
-     handleMobileMenuClose();
+    handleMobileMenuClose();
     auth.logout(() => {
+      toggleNewUser();
       props.history.push("/");
     });
   };
@@ -194,11 +197,15 @@ const PrimarySearchAppBar = (props) => {
 };
 
 const mapStatetoProps = state => ({
-  userName :state.imageCollection.user
-})
+  userName: state.imageCollection.user
+});
 
-const mapDispatchToProps =(dispatch) => ({
-logoutFunc : () => dispatch(logoutAsync())
-})
+const mapDispatchToProps = dispatch => ({
+  logoutFunc: () => dispatch(logoutAsync()),
+  toggleNewUser: () => dispatch(toggleUserAsync(false))
+});
 
-export default connect(mapStatetoProps,mapDispatchToProps)(PrimarySearchAppBar);
+export default connect(
+  mapStatetoProps,
+  mapDispatchToProps
+)(PrimarySearchAppBar);

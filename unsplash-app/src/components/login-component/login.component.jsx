@@ -40,11 +40,11 @@ const useStyles = theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    backgroundColor:"#3db46d",
-    color:"#fff",
-      "&:hover" : {
-        backgroundColor:"#3db46d",
-      }
+    backgroundColor: "#3db46d",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#3db46d"
+    }
   },
   link: {
     cursor: "pointer"
@@ -53,6 +53,7 @@ const useStyles = theme => ({
 
 // check token eligibility for enable protected routes without login(login with password).
 const tokenBasedRouting = props => {
+  const { loginWithRefreshToken } = props;
   const refresh_token = localStorage.getItem("refresh_token");
   const accessToken = localStorage.getItem("access_token");
   if (eligibleToken(accessToken)) {
@@ -60,7 +61,7 @@ const tokenBasedRouting = props => {
       props.history.push("/home");
     });
   } else if (eligibleToken(refresh_token)) {
-    props.loginWithRefreshToken(refresh_token);
+    loginWithRefreshToken(refresh_token);
     auth.login(() => {
       props.history.push("/home");
     });
@@ -68,11 +69,10 @@ const tokenBasedRouting = props => {
 };
 
 class Login extends React.Component {
-  componentDidMount =() =>{
+  componentDidMount = () => {
     tokenBasedRouting(this.props);
-  }
+  };
   render() {
-
     const { toggleUser, userLogin, classes } = this.props;
     const loginWithCredential = async () => {
       const userName = document.getElementById("email").value;
@@ -160,13 +160,11 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  toggleUser: () => dispatch(toggleUserAsync()),
+  toggleUser: () => dispatch(toggleUserAsync(true)),
   userLogin: (userName, password) =>
     dispatch(loginWithCredentialsAsync(userName, password)),
   loginWithRefreshToken: refresh_token =>
     dispatch(loginWithRefreshToken(refresh_token))
 });
 
-export default withStyles(useStyles)(
-  connect(null, mapDispatchToProps)(Login)
-);
+export default withStyles(useStyles)(connect(null, mapDispatchToProps)(Login));

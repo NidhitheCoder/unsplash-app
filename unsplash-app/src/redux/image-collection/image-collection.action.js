@@ -10,13 +10,14 @@ const makeHeader = token => {
 };
 
 //toggleUsers helps to toggle login and signup page in a single route
-export const toggleUser = () => ({
-  type: imageCollectionActionTypes.TOGGLE_USER_TYPE
+export const toggleUser = value => ({
+  type: imageCollectionActionTypes.TOGGLE_USER_TYPE,
+  payload: value
 });
 
-export const toggleUserAsync = () => {
+export const toggleUserAsync = value => {
   return dispatch => {
-    dispatch(toggleUser());
+    dispatch(toggleUser(value));
   };
 };
 
@@ -78,7 +79,8 @@ export const loginWithRefreshToken = refresh_token => {
     await axios
       .post("/login", {
         headers: {
-          Authorization: `Bearer ${refresh_token}`
+          "Content-Type": "application/json",
+          Authorization: `Refresh ${refresh_token}`
         }
       })
       .then(res => {
