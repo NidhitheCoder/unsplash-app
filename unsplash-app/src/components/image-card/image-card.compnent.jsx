@@ -77,6 +77,7 @@ const ImageCard = ({
       userName.username,
       password
     );
+
     if (loginData && loginData.access_token) {
       removeImage(data, password, userName);
       setOpen(false);

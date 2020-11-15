@@ -65,7 +65,7 @@ export const loginWithCredentialsAsync = (userName, password) => {
           localStorage.setItem("refresh_token", response.data.refresh_token);
           let parsedToken = parseToken(response.data.access_token);
           dispatch(addUserDetailsToStore(parsedToken));
-          return response.data;
+          return res.data;
         }
       })
       .catch(err => alert("Unauthorized action... Please try again "));
@@ -172,22 +172,36 @@ export const addSingleImageToStore = singleImage => ({
   payload: singleImage
 });
 
-export const addSingleImageToStoreAsync = (title, file, userId) => {
+export const addSingleImageToStoreAsync = (file, userId, label) => {
   return async dispatch => {
     let response;
+   
+    const config ={
+      headers:{
+        "Content-Type": "multipart/form-data" ,
+        Authorization: `Refresh ${localStorage.getItem("refresh_token")}`
+      }
+    }
+
     await axios
       .post(
-        `/api/images`,
+        `/api/images/`,
         {
           user_id: userId,
-          label: title,
+          label: label,
           file: file
         },
-        { headers: makeHeader(localStorage.getItem("access_token")) }
+        config
       )
       .then(res => (response = res))
       .catch(err => alert("error " + err));
 
+
+    // await axios({ method: 'post', url:`/api/images/`,config })
+    //    .then(res => (response = res))
+    //   .catch(err => alert("error " + err));
+
+    console.log("response : ", response);
     if (response && response.status === 201) {
       dispatch(addSingleImageToStore(response.data));
     } else {
