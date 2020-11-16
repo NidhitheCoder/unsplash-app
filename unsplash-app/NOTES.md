@@ -290,3 +290,24 @@ referance for dependency error when running our app : https://github.com/creativ
         ```
   * Referance for how to set env variables in react :- https://www.youtube.com/watch?v=KJE4LtAxLEw
  
+
+ # Hosting with Netlify
+
+ - Netlify offers hosting and serverless backend services for web applications and static websites.
+
+ - Steps for hosting:
+  1. Check env 
+  2. Run the command 'npm i -g netlify-cli'.
+  3. Create a file named netlify.toml and add
+      ```
+       [build]
+           publish="build"
+
+      ```  and save.
+  4. Run the command 'netlify init'.
+  5. Add env variable(s) to the site diploy settings(like key-value pair).
+  6. Run the command ' npm run build'.
+  7. run the command 'netlify deploy --prod'. flags are optional.
+
+
+  Referance : https://www.udemy.com/course/modern-react-front-to-back/learn/lecture/14969898#overview

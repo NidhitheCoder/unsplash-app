@@ -94,15 +94,14 @@ const AddPhoto = ({ addSingleImage, userId }) => {
   const AddImage = async () => {
     const label = document.getElementById("photoLabel").value;
     const url = document.getElementById("photoUrl");
-    const fd = new FormData();
-    const file = url.files[0];
-    fd.append("file", file);
-    // const options = {
-    //   data: { file: fd }
-    // };
 
     if (label !== "" && url !== "") {
-      addSingleImage(label, fd, userId);
+      const file = url.files[0];
+      let fd = new FormData();
+      fd.append("label", label);
+      fd.append("user_id", userId);
+      fd.append("file", file, file.name);
+      addSingleImage(fd, file);
       setOpen(false);
     } else {
       alert("Please fill all the fields..");
@@ -141,7 +140,7 @@ const AddPhoto = ({ addSingleImage, userId }) => {
                   type="file"
                   id="photoUrl"
                   className={classes.fileUpload}
-                  name="image"
+                  name="file"
                 />
               </Grid>
               <Grid item xs={2}></Grid>
@@ -167,8 +166,8 @@ const AddPhoto = ({ addSingleImage, userId }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addSingleImage: (title, url, userId) =>
-    dispatch(addSingleImageToStoreAsync(title, url, userId))
+  addSingleImage: (file, imageUrl) =>
+    dispatch(addSingleImageToStoreAsync(file, imageUrl))
 });
 
 export default connect(null, mapDispatchToProps)(AddPhoto);

@@ -77,6 +77,7 @@ const ImageCard = ({
       userName.username,
       password
     );
+
     if (loginData && loginData.access_token) {
       removeImage(data, password, userName);
       setOpen(false);
@@ -147,8 +148,7 @@ const ImageCard = ({
 };
 
 const mapDispatchToProps = dispatch => ({
-  removeImage: (image, password) =>
-    dispatch(removeImageFromStoreAsync(image, password)),
+  removeImage: image => dispatch(removeImageFromStoreAsync(image)),
   loginWithUserNameAndPassword: (userName, password) =>
     dispatch(loginWithCredentialsAsync(userName, password))
 });

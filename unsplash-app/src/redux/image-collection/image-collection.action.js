@@ -65,10 +65,10 @@ export const loginWithCredentialsAsync = (userName, password) => {
           localStorage.setItem("refresh_token", response.data.refresh_token);
           let parsedToken = parseToken(response.data.access_token);
           dispatch(addUserDetailsToStore(parsedToken));
-          return response.data;
         }
       })
-      .catch(err => alert("Unauthorized action... Please try again "));
+      .catch(err => alert(err));
+    return response && response.data;
   };
 };
 
@@ -97,6 +97,7 @@ export const loginWithRefreshToken = refresh_token => {
       localStorage.setItem("access_token", response.data.access_token);
       let parsedToken = parseToken(response.data.access_token);
       dispatch(addUserDetailsToStore(parsedToken));
+      console.log("response aghayaa");
       return response;
     }
   };
@@ -156,7 +157,7 @@ export const fetchCollecitonsStartAsync = () => {
 
     if (response && response.status === 200) {
       setTimeout(() => {
-        dispatch(fetchImagesSuccess(response.data));
+        dispatch(fetchImagesSuccess(response.data ? response.data : []));
       }, 1000);
       let parsedToken = parseToken(localStorage.getItem("access_token"));
       dispatch(addUserDetailsToStore(parsedToken));
@@ -172,26 +173,32 @@ export const addSingleImageToStore = singleImage => ({
   payload: singleImage
 });
 
-export const addSingleImageToStoreAsync = (title, file, userId) => {
+export const addSingleImageToStoreAsync = (file, imageUrl) => {
   return async dispatch => {
     let response;
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`
+      },
+      timeout: 5000
+    };
+
     await axios
-      .post(
-        `/api/images`,
-        {
-          user_id: userId,
-          label: title,
-          file: file
-        },
-        { headers: makeHeader(localStorage.getItem("access_token")) }
-      )
-      .then(res => (response = res))
+      .post(`/api/images/`, file, config)
+      .then(res => {
+        response = res;
+      })
       .catch(err => alert("error " + err));
 
     if (response && response.status === 201) {
-      dispatch(addSingleImageToStore(response.data));
-    } else {
-      alert("Something wrong : " + response);
+      alert("Image successfully uploaded.");
+      let img = {
+        id: response.data.id,
+        label: response.data.label,
+        name: URL.createObjectURL(imageUrl)
+      };
+      dispatch(addSingleImageToStore(img));
     }
   };
 };
@@ -202,7 +209,7 @@ export const removeImageFromStore = image => ({
   payload: image
 });
 
-export const removeImageFromStoreAsync = (image, password) => {
+export const removeImageFromStoreAsync = image => {
   return async dispatch => {
     let response;
     await axios
@@ -214,6 +221,7 @@ export const removeImageFromStoreAsync = (image, password) => {
       });
     if (response && response.status === 200) {
       dispatch(removeImageFromStore(image));
+      alert("Image successfully deleted.");
     } else {
       alert("Something Wrong : " + response.statusText);
     }
