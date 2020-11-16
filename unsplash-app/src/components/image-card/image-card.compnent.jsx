@@ -148,8 +148,7 @@ const ImageCard = ({
 };
 
 const mapDispatchToProps = dispatch => ({
-  removeImage: (image, password) =>
-    dispatch(removeImageFromStoreAsync(image, password)),
+  removeImage: image => dispatch(removeImageFromStoreAsync(image)),
   loginWithUserNameAndPassword: (userName, password) =>
     dispatch(loginWithCredentialsAsync(userName, password))
 });

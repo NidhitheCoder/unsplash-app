@@ -97,15 +97,13 @@ const AddPhoto = ({ addSingleImage, userId }) => {
 
     if (label !== "" && url !== "") {
       const file = url.files[0];
-  
-      let fd = new FormData();
-      fd.append("file", file,file.name);
-      // let options = { content: fd };
 
-    //   for (var key of fd.entries()) {
-    //     console.log( key[1]);
-    // }
-      addSingleImage(fd, userId, label);
+      let fd = new FormData();
+      fd.append("label", label);
+      fd.append("user_id", userId);
+      fd.append("file", file, file.name);
+
+      addSingleImage(fd, file);
       setOpen(false);
     } else {
       alert("Please fill all the fields..");
@@ -170,8 +168,8 @@ const AddPhoto = ({ addSingleImage, userId }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addSingleImage: (file, userId, label) =>
-    dispatch(addSingleImageToStoreAsync(file, userId, label))
+  addSingleImage: (file, imageUrl) =>
+    dispatch(addSingleImageToStoreAsync(file, imageUrl))
 });
 
 export default connect(null, mapDispatchToProps)(AddPhoto);

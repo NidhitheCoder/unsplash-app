@@ -2,7 +2,7 @@ import imageCollectionActionTypes from "./image-collection.types";
 import { removeImage } from "./image-collection.utils";
 
 const INITIAL_STATE = {
-  imageCollection: null,
+  imageCollection: [],
   searchWord: "",
   fetchComplete: "",
   newUser: false,
