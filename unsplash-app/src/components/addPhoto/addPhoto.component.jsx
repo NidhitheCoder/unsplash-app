@@ -97,12 +97,10 @@ const AddPhoto = ({ addSingleImage, userId }) => {
 
     if (label !== "" && url !== "") {
       const file = url.files[0];
-
       let fd = new FormData();
       fd.append("label", label);
       fd.append("user_id", userId);
       fd.append("file", file, file.name);
-
       addSingleImage(fd, file);
       setOpen(false);
     } else {

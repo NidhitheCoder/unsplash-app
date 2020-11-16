@@ -67,7 +67,7 @@ export const loginWithCredentialsAsync = (userName, password) => {
           dispatch(addUserDetailsToStore(parsedToken));
         }
       })
-      .catch(err => alert("Unauthorized action... Please try again "));
+      .catch(err => alert(err));
     return response && response.data;
   };
 };
@@ -180,7 +180,8 @@ export const addSingleImageToStoreAsync = (file, imageUrl) => {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${localStorage.getItem("access_token")}`
-      }
+      },
+      timeout: 5000
     };
 
     await axios
@@ -191,14 +192,13 @@ export const addSingleImageToStoreAsync = (file, imageUrl) => {
       .catch(err => alert("error " + err));
 
     if (response && response.status === 201) {
+      alert("Image successfully uploaded.");
       let img = {
         id: response.data.id,
         label: response.data.label,
         name: URL.createObjectURL(imageUrl)
       };
       dispatch(addSingleImageToStore(img));
-    } else {
-      alert("Something wrong : " + response);
     }
   };
 };
@@ -221,6 +221,7 @@ export const removeImageFromStoreAsync = image => {
       });
     if (response && response.status === 200) {
       dispatch(removeImageFromStore(image));
+      alert("Image successfully deleted.");
     } else {
       alert("Something Wrong : " + response.statusText);
     }
