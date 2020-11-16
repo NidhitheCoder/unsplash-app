@@ -3,8 +3,6 @@ import "./login.styles.modules.scss";
 import Avatar from "@material-ui/core/Avatar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -121,10 +119,6 @@ class Login extends React.Component {
                 type="password"
                 label="Password"
                 autoComplete="password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="secondary" />}
-                label="Remember Me"
               />
               <CustomButton
                 variant="contained"
