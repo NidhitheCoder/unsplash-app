@@ -8,7 +8,6 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Copyright } from "../copyright/copyright.component";
@@ -29,7 +28,9 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: "white",
+    height:"40px",
+    width:"40px",
   },
   form: {
     width: "100%",
@@ -45,6 +46,10 @@ const useStyles = makeStyles(theme => ({
   },
   link: {
     cursor: "pointer"
+  },
+  logoImg:{
+    height:"40px",
+    width:"40px"
   }
 }));
 
@@ -52,12 +57,17 @@ const SignUp = props => {
   const { toggleUser, userSignUp } = props;
 
   const signUpWithCredential = async () => {
-    const userName = document.getElementById("email").value;
+    const userName = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    await userSignUp(userName, password);
-    auth.login(() => {
-      props.history.push("/home");
-    });
+
+    if (userName !== "" && password !== "") {
+      await userSignUp(userName, password);
+      auth.login(() => {
+        props.history.push("/home");
+      });
+    } else {
+      alert("Please fill all the fields");
+    }
   };
   const classes = useStyles();
   return (
@@ -65,10 +75,10 @@ const SignUp = props => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <img src={require("../../assets/icon.png")} className={classes.logoImg} alt="icon"/>
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+          Sign up
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
@@ -76,12 +86,12 @@ const SignUp = props => {
               <TextField
                 autoComplete="email"
                 margin="normal"
-                name="email"
+                name="username"
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Email"
+                id="username"
+                label="Username"
                 autoFocus
               />
             </Grid>

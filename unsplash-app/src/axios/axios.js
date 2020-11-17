@@ -1,15 +1,9 @@
 import axios from "axios";
 
-let baseUrlId;
-
-if (process.env.NODE_ENV !== "production") {
-  baseUrlId = process.env.REACT_APP_API_URL;
-} else {
-  baseUrlId = process.env.API_URL;
-}
+const { REACT_APP_API_URL } = process.env;
 
 const instance = axios.create({
-  baseURL: baseUrlId,
+  baseURL: REACT_APP_API_URL,
   timeout: 1000
 });
 export default instance;
