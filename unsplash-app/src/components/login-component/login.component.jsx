@@ -78,7 +78,7 @@ class Login extends React.Component {
   render() {
     const { toggleUser, userLogin, classes } = this.props;
     const loginWithCredential = async () => {
-      const userName = document.getElementById("email").value;
+      const userName = document.getElementById("username").value;
       const password = document.getElementById("password").value;
 
       if (userName !== "" && password !== "") {
@@ -113,9 +113,9 @@ class Login extends React.Component {
                 margin="normal"
                 fullWidth
                 required
-                id="email"
-                label="Email Address"
-                name="email"
+                id="username"
+                label="Username"
+                name="username"
                 autoComplete="email"
                 autoFocus
               />

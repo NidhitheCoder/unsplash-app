@@ -57,7 +57,7 @@ const SignUp = props => {
   const { toggleUser, userSignUp } = props;
 
   const signUpWithCredential = async () => {
-    const userName = document.getElementById("email").value;
+    const userName = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
     if (userName !== "" && password !== "") {
@@ -86,12 +86,12 @@ const SignUp = props => {
               <TextField
                 autoComplete="email"
                 margin="normal"
-                name="email"
+                name="username"
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Email"
+                id="username"
+                label="Username"
                 autoFocus
               />
             </Grid>
