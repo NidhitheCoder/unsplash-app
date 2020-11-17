@@ -94,6 +94,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("md")]: {
       display: "none"
     }
+  },
+  logo:{
+    height:"80px",
+    width:"100px"
   }
 }));
 
@@ -183,7 +187,7 @@ const PrimarySearchAppBar = props => {
           </div>
 
           <Typography className={classes.title} variant="h6" noWrap>
-            Unsplash
+          <img src={require('../../assets/logo.png')} className={classes.logo} alt="logo"></img>
           </Typography>
           <div className={classes.search}>
             <Search />

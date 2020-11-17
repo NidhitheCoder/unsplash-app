@@ -6,7 +6,6 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import LockOutLinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -30,7 +29,9 @@ const useStyles = theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: "white",
+    height:"40px",
+    width:"40px",
   },
   form: {
     width: "100%",
@@ -46,6 +47,10 @@ const useStyles = theme => ({
   },
   link: {
     cursor: "pointer"
+  },
+  logoImg:{
+    height:"40px",
+    width:"40px"
   }
 });
 
@@ -97,7 +102,7 @@ class Login extends React.Component {
           <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
-              <LockOutLinedIcon />
+              <img src={require('../../assets/icon.png')} className={classes.logoImg} alt="icon" />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
@@ -133,9 +138,6 @@ class Login extends React.Component {
               />
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot Password
-                  </Link>
                 </Grid>
                 <Grid item>
                   <Link
