@@ -311,3 +311,22 @@ referance for dependency error when running our app : https://github.com/creativ
 
 
   Referance : https://www.udemy.com/course/modern-react-front-to-back/learn/lecture/14969898#overview
+
+  # Hosting with Amazon S3
+  - Amazon S3 is a cloud storage service build by amazon.which allows to store unlimited number of files in the cloud.
+  - You can use Amazon S3 to host a static website. On a static website, individual webpages include static content. They might also contain client-side scripts.Amazon S3 does not support server-side scripting, but AWS has other resources for hosting dynamic websites.
+
+  - Advantages of Amazon S3
+     * Great performance
+     * Secure
+     * Low Cost : Pay for what you use.
+     * Scale
+
+  - Steps to Host a static website
+    - Create new bucket 
+    - Uncheck block all public access -> create new bucket
+    - Inside the bucket, in property tab enable static website 
+    - Hosting type is "host a static website"
+    - Make index.html as index document and error document
+    - Make each files are in public (click on file -> object actions -> make public)
+    - Find your website link in static website hosting section.
