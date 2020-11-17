@@ -73,6 +73,9 @@ const ImageCard = ({
 
   const deleteImage = async () => {
     const password = document.getElementById("password").value;
+    if(password === "") {
+        alert("Please enter your password");
+    } else {
     let loginData = await loginWithUserNameAndPassword(
       userName.username,
       password
@@ -82,6 +85,7 @@ const ImageCard = ({
       removeImage(data, password, userName);
       setOpen(false);
     }
+  }
   };
 
   const classes = useStyles();

@@ -329,4 +329,24 @@ referance for dependency error when running our app : https://github.com/creativ
     - Hosting type is "host a static website"
     - Make index.html as index document and error document
     - Make each files are in public (click on file -> object actions -> make public)
+        or select all -> action  -> make public
     - Find your website link in static website hosting section.
+
+    - If you need to add build policy then
+       This is the example:-
+       
+         ```  
+          {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "PublicReadGetObject",
+              "Effect": "Allow",
+              "Principal": "*",
+              "Action": "s3:GetObject",
+              "Resource": "arn:aws:s3:::<Your bucketName here>/*"
+            }
+          ]
+          }
+
+         ```
