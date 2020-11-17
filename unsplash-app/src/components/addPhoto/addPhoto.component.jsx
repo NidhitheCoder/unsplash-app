@@ -94,9 +94,8 @@ const AddPhoto = ({ addSingleImage, userId }) => {
   const AddImage = async () => {
     const label = document.getElementById("photoLabel").value;
     const url = document.getElementById("photoUrl");
-
-    if (label !== "" && url !== "") {
-      const file = url.files[0];
+    const file = url.files[0];
+    if (label !== "" && file !== undefined) {
       let fd = new FormData();
       fd.append("label", label);
       fd.append("user_id", userId);

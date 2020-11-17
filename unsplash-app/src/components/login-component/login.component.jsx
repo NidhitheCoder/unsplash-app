@@ -75,14 +75,19 @@ class Login extends React.Component {
     const loginWithCredential = async () => {
       const userName = document.getElementById("email").value;
       const password = document.getElementById("password").value;
-      await userLogin(userName, password);
-      let newAccessToken = localStorage.getItem("access_token");
-      if (eligibleToken(newAccessToken)) {
-        auth.login(() => {
-          this.props.history.push("/home");
-        });
+
+      if (userName !== "" && password !== "") {
+        await userLogin(userName, password);
+        let newAccessToken = localStorage.getItem("access_token");
+        if (eligibleToken(newAccessToken)) {
+          auth.login(() => {
+            this.props.history.push("/home");
+          });
+        } else {
+          alert("Unauthorized Action");
+        }
       } else {
-        alert("Unauthorized Action");
+        alert("Please fill all the fields");
       }
     };
 

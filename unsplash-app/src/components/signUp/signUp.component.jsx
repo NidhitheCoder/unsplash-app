@@ -54,10 +54,15 @@ const SignUp = props => {
   const signUpWithCredential = async () => {
     const userName = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    await userSignUp(userName, password);
-    auth.login(() => {
-      props.history.push("/home");
-    });
+
+    if (userName !== "" && password !== "") {
+      await userSignUp(userName, password);
+      auth.login(() => {
+        props.history.push("/home");
+      });
+    } else {
+      alert("Please fill all the fields");
+    }
   };
   const classes = useStyles();
   return (
